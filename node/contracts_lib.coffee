@@ -16,7 +16,7 @@ c          = console
 #
 contracts_path = "#{process.cwd()}/contracts"
 # contracts_path = "./contracts"
-config_path        = "./config"
+config_path        = "../config"
 
 # "constants"
 contracts_conf_path = "#{config_path}/contracts.json"

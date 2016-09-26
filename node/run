@@ -1,1 +1,4 @@
 coffee -o dist -c *.coffee
+
+node dist/contracts_deploy.js
+# node dist/contracts_export.js

@@ -1,6 +1,6 @@
 c = console
 Web3 = require 'web3'
-contractsLib = require './contracts'
+contractsLib = require './contracts_lib'
 deasync = require 'deasync'
 
 getCoinbase = ->
@@ -20,7 +20,9 @@ if process.env.RPC == "true"
   geth_host = "http://127.0.0.1:8545" # TODO: load config and/or override using env vars
   provider = new Web3.providers.HttpProvider geth_host
 else # IPC is the default method
-  geth_ipc  = "#{process.env.HOME}/eth-db/bapp/geth.ipc"
+  parity_ipc  = "#{process.env.HOME}/.parity/jsonrpc.ipc" # parity
+  geth_ipc = parity_ipc
+  # geth_ipc  = "#{process.env.HOME}/blockchain_data/geth.ipc" # geth dev
   # geth_ipc  = "#{process.env.HOME}/.ethereum/geth.ipc" # public chain
   #
   provider = new Web3.providers.IpcProvider  geth_ipc, require('net')

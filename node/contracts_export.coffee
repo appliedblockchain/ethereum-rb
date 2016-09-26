@@ -11,10 +11,13 @@ for ctr in contracts
   delete ctr.compiled
   ctr
 
-# c.log contracts
 
-contracts_path = "#{process.cwd()}/contracts"
-babi_path = "#{contracts_path}/contracts_babi.json"
+
+c.log "\nContracts:"
+c.log "#{JSON.stringify contracts}\n"
+
+config_path = "#{process.cwd()}/../config"
+babi_path = "#{config_path}/contracts_babi.json"
 c.log "out:", babi_path
 fs.writeFileSync babi_path, JSON.stringify contracts
 
