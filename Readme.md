@@ -1,8 +1,8 @@
 ### Ethereum-Ruby
 
-RPC Part
+RPC Client
 
 
-Implemented methods:
+Implemented methods (current status):
 
 https://github.com/appliedblockchain/ethereum/blob/master/lib/method_lookup.rb#L7
