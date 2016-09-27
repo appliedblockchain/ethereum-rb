@@ -1,4 +1,4 @@
 dist/*.js
 node/node_modules/
 config/contracts.json
-config/contracts_babi.json
+config/contracts_interface.json

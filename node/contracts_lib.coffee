@@ -71,9 +71,9 @@ module.exports = (web3) -> # TODO use env.web3 probably now is better
         deasync.runLoopOnce()
       result
     else # using npm solc (c++ solc code embedded in node package)
-      c.log "source (#{name}): #{source}"
+      # c.log "source (#{name}): #{source}" if DEBUG
       result = solc.compile source
-      c.log "compiled: #{stringify(result)[0..100]} ..."
+      c.log "compiled: #{stringify(result)[0..100]} ..." if DEBUG
       # c.log "compiled: #{stringify result}"
       result
 
@@ -90,7 +90,7 @@ module.exports = (web3) -> # TODO use env.web3 probably now is better
     c.log "#{contract_class} contract (compiled)"
     # throw errCtrClassMismatch(contract_class) unless contr
     # c.log "contract: #{stringify contr}"
-    c.log "keys: #{_.keys contr}"
+    # c.log "keys: #{_.keys contr}"
 
     # Bytecode (used to deploy the contract)
     bytecode = contr.bytecode
@@ -105,7 +105,8 @@ module.exports = (web3) -> # TODO use env.web3 probably now is better
       function_hashes = contr.functionHashes
       gas_estimates   = contr.gasEstimates
 
-    c.log "ABI: #{stringify abi}"
+    # c.log "ABI: #{stringify abi}" if DEBUG
+
     abi = _(abi)
     methods = []
     getters = []

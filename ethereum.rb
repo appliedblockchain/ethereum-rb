@@ -12,6 +12,7 @@ BLOCK_TIMEOUT = 3 # seconds - tx confirmation timeout (wait_for_block)
 
 module Ethereum
 
+  include Interface
   include TxHandlers
   include ResponseParsing
 

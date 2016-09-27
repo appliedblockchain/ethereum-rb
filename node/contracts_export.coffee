@@ -13,12 +13,12 @@ for ctr in contracts
 
 
 
-c.log "\nContracts:"
-c.log "#{JSON.stringify contracts}\n"
+# c.log "\nContracts:"
+# c.log "#{JSON.stringify contracts}\n"
 
 config_path = "#{process.cwd()}/../config"
-babi_path = "#{config_path}/contracts_babi.json"
-c.log "out:", babi_path
-fs.writeFileSync babi_path, JSON.stringify contracts
+interface_path = "#{config_path}/contracts_interface.json"
+c.log "out:", interface_path
+fs.writeFileSync interface_path, JSON.stringify contracts
 
 process.exit 0 # bye!

@@ -73,9 +73,10 @@
         }
         return result;
       } else {
-        c.log("source (" + name + "): " + source);
         result = solc.compile(source);
-        c.log("compiled: " + (stringify(result).slice(0, 101)) + " ...");
+        if (DEBUG) {
+          c.log("compiled: " + (stringify(result).slice(0, 101)) + " ...");
+        }
         return result;
       }
     };
@@ -85,14 +86,12 @@
       compiled = compileSolidityDeasynced(contract.source, contract_class);
       contr = compiled.contracts[contract_class];
       c.log(contract_class + " contract (compiled)");
-      c.log("keys: " + (_.keys(contr)));
       bytecode = contr.bytecode;
       abi = USE_NPM_SOLC ? JSON.parse(contr["interface"]) : contr.info.abiDefinition;
       if (USE_NPM_SOLC) {
         function_hashes = contr.functionHashes;
         gas_estimates = contr.gasEstimates;
       }
-      c.log("ABI: " + (stringify(abi)));
       abi = _(abi);
       methods = [];
       getters = [];
