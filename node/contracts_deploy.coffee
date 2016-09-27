@@ -18,12 +18,14 @@ deployContract = (coinbase, contract) ->
     deasync.runLoopOnce()
   res
 
-for contract in contracts
-  result = deployContract coinbase, contract, ->
-    c.log "contract deployed: #{result.name}"
-    c.log "getters: ", JSON.stringify result.getters
-    c.log "setters: ", JSON.stringify result.setters
-    c.log ""
+contracts.forEach (contract, idx) ->
+  setTimeout ->
+    deployContract coinbase, contract, ->
+      c.log "contract deployed: #{result.name}"
+      c.log "getters: ", JSON.stringify result.getters
+      c.log "setters: ", JSON.stringify result.setters
+      c.log ""
 
-c.log "done!"
-process.exit 0
+      c.log "done!"
+      # process.exit 0 if idx == contracts.length - 1
+  , idx * 3000

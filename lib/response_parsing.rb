@@ -16,7 +16,7 @@ module ResponseParsing
   end
 
 
-
+  # util
 
   def parse(resp)
     resp = JSON.parse resp

@@ -24,3 +24,5 @@ module MethodLookup
       raise "NOT HANDLED".inspect
     end
   end
+
+end

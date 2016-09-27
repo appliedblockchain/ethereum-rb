@@ -22,8 +22,8 @@
   };
 
   displayErr = function(label, err) {
-    console.error("Got error when '" + label + "':");
-    return console.error((JSON.stringify(err)) + "\n");
+    c.error("Got error when '" + label + "':");
+    return c.error((JSON.stringify(err)) + "\n");
   };
 
   renderDeployError = function(res, err) {
@@ -55,13 +55,13 @@
     return Contract["new"](options, function(err, contract_instance) {
       var callback, instance;
       instance = contract_instance;
-      console.log(">>>>>>>>");
+      c.log(contract.class_name + ".new called");
       if (err) {
         return renderDeployError(res, err);
       } else {
         if (instance.address) {
-          console.log("  address: " + instance.address + "\n");
-          console.log("done!");
+          c.log("  deployed!");
+          c.log("  address: " + instance.address + "\n");
           contract.address = instance.address;
           contract.deployed = true;
           saveContractAddress(contract.name, instance.address);

@@ -1,3 +1,4 @@
+require_relative 'env'
 
 DEBUG = true
 # DEBUG = false
@@ -197,8 +198,8 @@ module Ethereum
   def main
     # TODO: add pipelining
 
-    @conn = ConnectionRPC.new
-    # @conn = ConnectionIPC.new
+    @conn = Connection::HTTP.new
+    # @conn = Connection::IPC.new
     @conn.start do
       resp = coinbase
       puts "Coinbase: #{coinbase}"

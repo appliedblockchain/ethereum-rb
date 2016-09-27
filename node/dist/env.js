@@ -22,7 +22,9 @@
     return res;
   };
 
-  if (process.env.RPC === "true") {
+  c.log("RPC: " + process.env.RPC);
+
+  if (process.env.RPC === "1") {
     c.log("Using RPC instead of IPC");
     geth_host = "http://127.0.0.1:8545";
     provider = new Web3.providers.HttpProvider(geth_host);

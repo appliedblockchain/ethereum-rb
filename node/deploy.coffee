@@ -16,8 +16,8 @@ saveContractAddress = (contract_name, instance_address) ->
   fs.writeFileSync contracts_json_path, config_json
 
 displayErr = (label, err) ->
-  console.error "Got error when '#{label}':"
-  console.error "#{JSON.stringify err}\n"
+  c.error "Got error when '#{label}':"
+  c.error "#{JSON.stringify err}\n"
 
 renderDeployError = (res, err) ->
   displayErr "deploying contract", err
@@ -51,13 +51,13 @@ deployContract = (coin_base, contract, res) ->
 
   Contract.new options, (err, contract_instance) ->
     instance = contract_instance
-    console.log ">>>>>>>>"
+    c.log "#{contract.class_name}.new called"
     if err
       renderDeployError res, err
     else
       if instance.address
-        console.log "  address: #{instance.address}\n"
-        console.log "done!"
+        c.log "  deployed!"
+        c.log "  address: #{instance.address}\n"
 
         contract.address      = instance.address
         contract.deployed     = true

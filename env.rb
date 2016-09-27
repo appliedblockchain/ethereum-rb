@@ -37,3 +37,7 @@ include Crypto
 
 
 require_relative 'lib/tx_handlers'
+require_relative 'lib/response_parsing'
+require_relative 'lib/method_lookup' # find the implemented RPC methods here
+
+require_relative 'lib/connection'
