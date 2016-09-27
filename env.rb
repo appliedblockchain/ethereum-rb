@@ -38,12 +38,10 @@ FRM = Ethereum::Formatter.new
 # ---
 
 require_relative 'lib/utils'
-
-
+require_relative 'lib/types'
 require_relative 'lib/crypto'
 include Crypto
-
-
+require_relative 'lib/parsing'
 require_relative 'lib/tx_handlers'
 require_relative 'lib/response_parsing'
 require_relative 'lib/method_lookup' # find the implemented RPC methods here

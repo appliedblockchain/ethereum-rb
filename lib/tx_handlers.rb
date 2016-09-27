@@ -9,6 +9,17 @@ module TxHandlers
     end
   end
 
+  BLOCK_TIMEOUT_SHORT = 0.3
+
+  def wait_block(last_block)
+    time = Time.now
+    loop do
+      return true if last_block != block_get
+      return false if Time.now - time > BLOCK_TIMEOUT_SHORT
+      sleep 0.05
+    end
+  end
+
   def wait_for_change(value, &proc)
     time = Time.now
     loop do
