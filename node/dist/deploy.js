@@ -12,7 +12,7 @@
 
   saveContractAddress = function(contract_name, instance_address) {
     var config, config_json, config_path, contracts_config, contracts_json_path;
-    config_path = (process.cwd()) + "/config";
+    config_path = (process.cwd()) + "/../config";
     contracts_json_path = config_path + "/contracts.json";
     contracts_config = fs.readFileSync(contracts_json_path);
     config = JSON.parse(contracts_config);
@@ -23,7 +23,7 @@
 
   displayErr = function(label, err) {
     console.error("Got error when '" + label + "':");
-    return console.error(err + "\n");
+    return console.error((JSON.stringify(err)) + "\n");
   };
 
   renderDeployError = function(res, err) {
@@ -36,27 +36,26 @@
       });
     }
     message = "The deployment of the contract failed, this is the full error message: '" + err.message + "'";
-    return res.json({
-      error: "contract_deployment_failed",
-      message: message,
-      eth_message: err.message
-    });
+    c.error(err.message);
+    throw err;
   };
 
   deployContract = function(coin_base, contract, res) {
-    var Contract, coinbase, options;
+    var Contract, coinbase, ctr, options;
     c.log("Deploying contract: " + contract.name);
     c.log("coinbase", coin_base);
     coinbase = coin_base;
     Contract = eth.contract(contract.abi);
+    ctr = contract.compiled.contracts[contract.class_name];
     options = {
-      data: contract.compiled[contract.class_name].code,
+      data: "0x" + ctr.bytecode,
       from: coinbase,
-      gas: 1e10
+      gas: 1e5
     };
     return Contract["new"](options, function(err, contract_instance) {
       var callback, instance;
       instance = contract_instance;
+      console.log(">>>>>>>>");
       if (err) {
         return renderDeployError(res, err);
       } else {
@@ -66,15 +65,8 @@
           contract.address = instance.address;
           contract.deployed = true;
           saveContractAddress(contract.name, instance.address);
-          if (res.json != null) {
-            return res.json({
-              success: true,
-              address: contract.address
-            });
-          } else {
-            callback = res;
-            return callback(contract);
-          }
+          callback = res;
+          return callback(contract);
         }
       }
     });

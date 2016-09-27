@@ -11,16 +11,24 @@ c          = console
 # web3       = env.web3
 # eth        = env.eth
 
+stringify = (obj) ->
+  JSON.stringify obj
+
+
+DEBUG = true
 
 # configs (paths)
 #
-contracts_path = "#{process.cwd()}/contracts"
+contracts_path = "#{process.cwd()}/../contracts"
 # contracts_path = "./contracts"
-config_path        = "../config"
+config_path        = "#{process.cwd()}/../config"
 
 # "constants"
 contracts_conf_path = "#{config_path}/contracts.json"
 
+if DEBUG
+  c.log "contracts_path:      #{contracts_path}"
+  c.log "contracts_conf_path: #{contracts_conf_path}"
 
 log = (name, contents) ->
   c.log "\n#{name}:"
@@ -39,32 +47,65 @@ errCtrClassMismatch = (contract_class) ->
   "Contract class has to have the same name of the file (found class '#{contract_class}' defined with a different name from the '.sol' contract file name)"
 
 
+USE_NPM_SOLC = true
+
+solc = require 'solc' if USE_NPM_SOLC
 
 module.exports = (web3) -> # TODO use env.web3 probably now is better
   eth = web3.eth
 
   compileSolidityDeasynced = (source, name) ->
-    result = null
-    eth.compile.solidity source, (err, compiled) ->
-      if err
-        c.error "Error compiling solidity:"
-        c.error err
-        throw "ContractCompilationError - Aborting, check the source code of contract: #{name}"
-      result = compiled
-    while result == null
-      deasync.runLoopOnce()
-    result
+    unless USE_NPM_SOLC
+      # compileSolidityEth(source, name)
+      #
+      # compileSolidityEth = (source, name) ->
+      #   ...
+      result = null
+      eth.compile.solidity source, (err, compiled) ->
+        if err
+          c.error "Error compiling solidity:"
+          c.error err
+          throw "ContractCompilationError - Aborting, check the source code of contract: #{name}"
+        result = compiled
+      while result == null
+        deasync.runLoopOnce()
+      result
+    else # using npm solc (c++ solc code embedded in node package)
+      c.log "source (#{name}): #{source}"
+      result = solc.compile source
+      c.log "compiled: #{stringify(result)[0..100]} ..."
+      # c.log "compiled: #{stringify result}"
+      result
 
-  getInstance = (contract) ->
-    Contract = eth.contract contract.abi
-    Contract.at contract.address
+  # it doesn't work with solc, but we don't care as we're not using web3
+  #
+  # getInstance = (contract) ->
+  #   Contract = eth.contract stringify contract.abi
+  #   Contract.at contract.address
 
   parseContract = (contract) ->
     contract_class = capitalize classify(contract.name, true)
     compiled = compileSolidityDeasynced contract.source, contract_class
-    contr = compiled[contract_class]
-    throw errCtrClassMismatch(contract_class) unless contr
-    abi = contr.info.abiDefinition
+    contr = compiled.contracts[contract_class]
+    c.log "#{contract_class} contract (compiled)"
+    # throw errCtrClassMismatch(contract_class) unless contr
+    # c.log "contract: #{stringify contr}"
+    c.log "keys: #{_.keys contr}"
+
+    # Bytecode (used to deploy the contract)
+    bytecode = contr.bytecode
+
+    # ABI (used to call the contract)
+    abi = if USE_NPM_SOLC
+      JSON.parse contr.interface
+    else
+      contr.info.abiDefinition
+
+    if USE_NPM_SOLC
+      function_hashes = contr.functionHashes
+      gas_estimates   = contr.gasEstimates
+
+    c.log "ABI: #{stringify abi}"
     abi = _(abi)
     methods = []
     getters = []
@@ -73,7 +114,7 @@ module.exports = (web3) -> # TODO use env.web3 probably now is better
     abi_methods = abi.select (token) ->
       token.type == "function"
     abi_methods.map (abi_method) ->
-      # console.log "name: #{abi_method.name}, constant: #{abi_method.constant}, inputs: #{JSON.stringify abi_method.inputs}, outputs: #{JSON.stringify abi_method.outputs}" if abi_method.name == "get" # <<< debug
+      # console.log "name: #{abi_method.name}, constant: #{abi_method.constant}, inputs: #{stringify abi_method.inputs}, outputs: #{stringify abi_method.outputs}" if abi_method.name == "get" # <<< debug
       isSetter = abi_method.inputs.length > 0 && !abi_method.constant
 
       type = if isSetter then "setter" else "getter"
@@ -100,7 +141,8 @@ module.exports = (web3) -> # TODO use env.web3 probably now is better
       methods:    methods
       getters:    getters
       setters:    setters
-    contract.instance = getInstance contract
+    # NOT USED, YAY!
+    # contract.instance = getInstance contract
     contract
 
   readConfigs = ->
@@ -110,7 +152,7 @@ module.exports = (web3) -> # TODO use env.web3 probably now is better
   deleteAddressFromConf = (contract_name, callback) ->
     conf = readConfigs()
     delete conf[contract_name]
-    conf = JSON.stringify conf, null, 2
+    conf = stringify conf, null, 2
     fs.writeFileSync contracts_conf_path, conf
     callback()
 
