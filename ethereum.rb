@@ -15,6 +15,7 @@ module Ethereum
   include Interface
   include TxHandlers
   include ResponseParsing
+  include Utils
 
   def costz
     from = "0x433a8524aa6180f19f3d81f0a66454c0c5e644e2"
@@ -103,45 +104,8 @@ module Ethereum
 
   # eth_getTransactionReceipt
 
-  def readz
-    from = "0x433a8524aa6180f19f3d81f0a66454c0c5e644e2"
-    contract_address = "0xbaea7ac25443d20a45c5db3e322ef572bc34b57e"
-    method_sig = "get(uint256)"
 
-    params = ["0000000000000000000000000000000000000000000000000000000000000001"]
-
-    outputs = [
-      {
-        "name" => "_id",
-        "type" => "uint256"
-      },
-      {
-        "name" => "key",
-        "type" => "bytes32"
-      },
-      {
-        "name" => "value",
-        "type" => "bytes32"
-      }
-    ]
-
-    sig = method_sig
-    sig = sha_sig sig
-    data = "0x#{sig}#{params.join}"
-
-    resp = read [{from: from, to: contract_address, data: data}]
-    # /entries_kv/get?id=1
-    resp = parse resp
-
-    puts "Resp (raw): #{resp}" unless DEBUG
-
-    output = parse_get_resp resp, outputs: outputs
-    puts "Resp: #{output}" unless DEBUG
-    # raise output.inspect
-    output
-  end
-
-
+  # TODO move outside
   def block_get
     res = parse block
     # puts "Block: #{res}"# if DEBUG
@@ -149,43 +113,44 @@ module Ethereum
   end
 
   def do_write
-    resp = readz
+    raise "of course!".inspect
+    resp = get
     puts "EntriesKV.get(1): #{resp.inspect}"
 
     last_block = block_get
     resp = writez
     puts "EntriesKV.update(1, x, x): #{resp} (receipt)"
 
-    resp = readz
+    resp = get
     wait_for_change(resp) do
-      readz
+      get
     end
 
     # wait_for_block last_block
     # puts "block found!"
 
 
-    resp = readz
+    resp = get
     puts "EntriesKV.get(1): #{resp.inspect}"
 
     puts "\n"
     # sleep 2
 
-    resp = readz
+    resp = get
     puts "EntriesKV.get(1): #{resp.inspect}"
 
     last_block = block_get
     resp = writez2
     puts "EntriesKV.update(1, y, y): #{resp} (receipt)"
-    resp = readz
+    resp = get
     wait_for_change(resp) do
-      readz
+      get
     end
     puts "change ok"
     # wait_for_block last_block
     # puts "block found!"
 
-    resp = readz
+    resp = get
     puts "EntriesKV.get(1): #{resp.inspect}"
 
     puts "\n"
@@ -194,21 +159,67 @@ module Ethereum
   end
 
 
+  include Interface
+
+
+  def get(contract:, method:, params: [])
+    from = @coinbase
+    contract = @interface[contract]
+    contract_address = contract[:address]
+
+    method_name = method
+    method = contract[:methods].find{ |m| m["name"] == method_name.to_s }
+    raise "Cannot contract method '#{method_name}' (contract: #{contract[:class_name]})" unless method
+    method = sym_keys method
+    sig = method[:methodId]
+    # raise sig.inspect
+    raise "Cannot find sha3 signature for method '#{method}'" unless sig
+    # method_sig = "get(uint256)"
+    # sig = method_sig
+    # sig = sha_sig sig
+
+    # TODO: fixme
+    params = ["000000000000000000000000000000000000000000000000000000000000000#{params.first}"]
+    params = []
+
+    # raise contract.inspect
+    outputs = method[:outputs]
+
+    data = "0x#{sig}#{params.join}"
+
+    puts "Calling #{contract[:class_name]}.#{method_name}(#{params.join ", "})"
+    resp = read [{from: from, to: contract_address, data: data}]
+    # /entries_kv/get?id=1
+    resp = parse resp
+
+
+    puts "Resp (raw): #{resp}" if DEBUG
+
+    output = parse_get_resp resp, outputs: outputs
+    puts "Resp: #{output}" if DEBUG
+    # raise output.inspect
+    output
+  end
 
 
   def main
+    @interface = load_interface
+
     # TODO: add pipelining
 
-    @conn = Connection::HTTP.new
-    # @conn = Connection::IPC.new
+    # @conn = Connection::HTTP.new
+    @conn = Connection::IPC.new
     @conn.start do
-      resp = coinbase
-      puts "Coinbase: #{coinbase}"
+      @coinbase = coinbase
+      puts "Coinbase: #{@coinbase}"
       puts "Balance: #{balance}"
-      puts "Block: #{block_get}\n\n"
+      puts "Block: #{block_get}"
+      puts "Contracts: #{@interface.map{ |contr, interf| "#{contr}:#{interf[:address]}" }.join " - "}"
+      puts "\n"
 
       # 10000.times do
-      # resp = readz
+      resp = get contract: :op_return, method: :data, params: [1]
+      puts "op_return.data(): #{resp.inspect}"
       # puts "EntriesKV.get(1): #{resp.inspect}"
       # end
 
@@ -216,9 +227,9 @@ module Ethereum
       # sig = "get(uint256)"
       # sig = sha_sig sig
 
-      20.times do
-      resp = do_write
-      end
+      # 20.times do
+      # resp = do_write
+      # end
       # unless resp
       #   resp = do_write
       # end

@@ -120,7 +120,7 @@ module.exports = (web3) -> # TODO use env.web3 probably now is better
 
       type = if isSetter then "setter" else "getter"
       inputTypes = _(abi_method.inputs).map (inp) -> inp.type
-      methodId = web3.sha3("#{abi_method.name}(#{inputTypes.join(',')})")[0..7]
+      methodId = web3.sha3("#{abi_method.name}(#{inputTypes.join(',')})")[0..9]
 
       method =
         name:     abi_method.name

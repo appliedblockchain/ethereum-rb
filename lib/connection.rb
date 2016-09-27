@@ -46,6 +46,7 @@ module Ethereum::Connection
     end
 
     def call(payload)
+      puts "payload: #{payload}"
       @req.body = payload
       resp = @http.request @req
       case resp

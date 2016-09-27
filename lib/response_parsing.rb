@@ -12,14 +12,28 @@ module ResponseParsing
     outputs.each_with_index do |out, idx|
       output[out["name"]] = result[idx]
     end
+
+    output = transform_one_key_resp output
+
     output
   end
 
+  def transform_one_key_resp(output)
+    return output unless output.keys == [""]
+    output[""]
+  end
 
   # util
 
   def parse(resp)
-    resp = JSON.parse resp
+    begin
+      resp = JSON.parse resp
+    rescue TypeError => err
+      puts "error parsing JSON"
+      puts "original:"
+      puts "#{resp}\n"
+      raise err
+    end
     resp["result"]
   end
 

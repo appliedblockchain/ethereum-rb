@@ -106,7 +106,7 @@
         inputTypes = _(abi_method.inputs).map(function(inp) {
           return inp.type;
         });
-        methodId = web3.sha3(abi_method.name + "(" + (inputTypes.join(',')) + ")").slice(0, 8);
+        methodId = web3.sha3(abi_method.name + "(" + (inputTypes.join(',')) + ")").slice(0, 10);
         method = {
           name: abi_method.name,
           kind: type,
