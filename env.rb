@@ -37,6 +37,7 @@ FRM = Ethereum::Formatter.new
 
 # ---
 
+require_relative 'lib/version'
 require_relative 'lib/utils'
 require_relative 'lib/types'
 require_relative 'lib/crypto'

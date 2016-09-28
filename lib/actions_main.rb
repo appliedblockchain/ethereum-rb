@@ -24,10 +24,13 @@ module ActionsMain
     resp = parse resp
     puts "Resp (raw): #{resp}" if DEBUG
 
-    resp = parse_types resp, outputs: outputs
-    puts "Resp (types): #{resp}" if DEBUG
+
+    # rause
+    # resp = parse_types resp, outputs: outputs
+    # puts "Resp (types): #{resp}" if DEBUG
+
     # resp = FRM.from_payload(resp)
-    resp = [resp] unless resp.is_a? Array
+    # resp = [resp] unless resp.is_a? Array
     resp = transform_outputs resp, outputs: method[:outputs]
 
     resp = if resp.size == 1
@@ -37,8 +40,6 @@ module ActionsMain
       # render_outputs
       resp_hash = {}
       method[:outputs].each_with_index do |out, idx|
-        raise "TODO - maybe it works though".inspect
-        raise out.inspect
         resp_hash[out["name"]] = resp[idx]
       end
       resp_hash

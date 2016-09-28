@@ -13,8 +13,11 @@ module Ethereum::Connection
 
     def start(&block)
       @socket = UNIXSocket.new IPC_PATH
-      block.call self
-      @socket.close
+      if block_given?
+        block.call self
+        @socket.close
+      end
+      @socket
     end
 
     def call(payload)
@@ -24,6 +27,10 @@ module Ethereum::Connection
       msg =  @socket.recv 10000000
       # msg += @socket.recv 10000000
       msg
+    end
+
+    def close
+      @socket.close
     end
   end
 

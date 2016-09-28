@@ -13,29 +13,30 @@ module Ethereum
     def initialize
       @interface = load_interface
       @conn = Connection::IPC.new
+      # @conn = Connection::HTTP.new
     end
 
     def start(&block)
-      # @conn = Connection::HTTP.new
-      @conn.start do
-        @coinbase = coinbase
-        puts "Coinbase: #{@coinbase}"
-        puts "Balance: #{balance}"
-        puts "Block: #{block_get.hex}"
-        puts "Contracts: #{@interface.map{ |contr, interf| "#{contr}:#{interf[:address]}" }.join " - "}"
-        puts "\n"
-
-        block.call self
-        # 10.times do
-        #   r = get contract: :op_return, method: :data, params: []
-        #   set     contract: :op_return, method: :set,  params: [44]
-        #
-        #   r = get contract: :op_return, method: :data, params: []
-        #   set     contract: :op_return, method: :set,  params: [45]
-        # end
+      if block_given?
+        @conn.start do
+          init
+          block.call self
+        end
+      else
+        @conn.start
+        init
       end
+    end
 
-      true
+    alias :start! :start
+
+    def init
+      @coinbase = coinbase
+      puts "Coinbase: #{@coinbase}"
+      puts "Balance: #{balance}"
+      puts "Block: #{block_get.hex}"
+      puts "Contracts: #{@interface.map{ |contr, interf| "#{contr}:#{interf[:address]}" }.join " - "}"
+      puts "\n"
     end
   end
 

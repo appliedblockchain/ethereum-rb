@@ -5,7 +5,8 @@ module Formatting
   # transform input params (get/set)
   #
   def transform_params(params, inputs:)
-    params = params.map{ |param| param.to_s }
+    params = params.map{ |param| param }
+    # params = params.map{ |param| param.to_s } FIXME
     params_tuple = inputs.map{ |inp| inp["type"] }.zip params
     params = []
     params_tuple.each do |param|
@@ -15,7 +16,7 @@ module Formatting
   end
 
   def transform_outputs(params, outputs:)
-    params = params.map{ |param| param.to_s }
+    params = params.gsub(/^0x/,'').scan /.{64}/
     params_tuple = outputs.map{ |out| out["type"] }.zip params
     params = []
     params_tuple.each do |param|
