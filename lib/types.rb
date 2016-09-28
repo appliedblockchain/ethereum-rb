@@ -1,4 +1,7 @@
 module Ethereum::Types
+
+  private
+
   def to_ascii(value)
     Ethereum::Formatter.new.to_ascii value
   end
@@ -6,4 +9,5 @@ module Ethereum::Types
   def from_ascii(value)
     Ethereum::Formatter.new.from_ascii value
   end
+  
 end

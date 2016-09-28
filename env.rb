@@ -42,7 +42,11 @@ require_relative 'lib/types'
 require_relative 'lib/crypto'
 include Crypto
 require_relative 'lib/parsing'
+require_relative 'lib/formatting'
+require_relative 'lib/rpc_calls'
 require_relative 'lib/tx_handlers'
+require_relative 'lib/actions_main'
+require_relative 'lib/actions_extra'
 require_relative 'lib/response_parsing'
 require_relative 'lib/method_lookup' # find the implemented RPC methods here
 
@@ -50,3 +54,18 @@ require_relative 'lib/connection'
 require_relative 'lib/interface'
 
 # ---
+
+module Ethereum
+  class Eth
+    include Types
+    include Interface
+    include TxHandlers
+    include ResponseParsing
+    include Parsing
+    include Formatting
+    include RpcCalls
+    include ActionsMain
+    include ActionsExtra
+    include Utils
+  end
+end

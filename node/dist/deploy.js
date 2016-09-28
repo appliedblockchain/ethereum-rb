@@ -50,7 +50,7 @@
     options = {
       data: "0x" + ctr.bytecode,
       from: coinbase,
-      gas: 1e5
+      gas: 1e6
     };
     return Contract["new"](options, function(err, contract_instance) {
       var callback, instance;

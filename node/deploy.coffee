@@ -43,7 +43,7 @@ deployContract = (coin_base, contract, res) ->
   options =
     data: "0x#{ctr.bytecode}",
     from: coinbase,
-    gas:  1e5      # 100_000
+    gas:  1e6      # 100_000
     # gas:  1e10   # 1_000_000_000
     # gas:  1e6    # 1_000_000
   # c.log "OPTIONS: #{JSON.stringify options}"

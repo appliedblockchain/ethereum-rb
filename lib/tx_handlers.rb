@@ -1,34 +1,49 @@
 module TxHandlers
 
-  def wait_for_block(last_block)
-    time = Time.now
-    loop do
-      sleep 0.05 && return if last_block != block_get
-      return if Time.now - time > BLOCK_TIMEOUT
-      sleep 0.05
-    end
-  end
-
   BLOCK_TIMEOUT_SHORT = 0.3
 
+  private
+
+  # currently used
+  #
   def wait_block(last_block)
     time = Time.now
     loop do
       return true if last_block != block_get
       return false if Time.now - time > BLOCK_TIMEOUT_SHORT
-      sleep 0.05
+      # sleep 0.001 # lowest number #  1ms
+      sleep 0.01    # good amount   # 10ms
     end
   end
 
-  def wait_for_change(value, &proc)
-    time = Time.now
-    loop do
-      return if value != proc.call
-      return if Time.now - time > BLOCK_TIMEOUT
-      puts Time.now - time
-      sleep 0.1
-    end
-  end
+  # ---
+
+  # OLD STRATEGIES
+  #
+  # BLOCK_TIMEOUT = 3 # seconds - tx confirmation timeout (wait_for_block)
+  #
+  # def wait_for_block(last_block)
+  #   time = Time.now
+  #   loop do
+  #     sleep 0.05 && return if last_block != block_get
+  #     return if Time.now - time > BLOCK_TIMEOUT
+  #     sleep 0.05
+  #   end
+  # end
+  #
+  # def wait_for_change(value, &proc)
+  #   time = Time.now
+  #   loop do
+  #     return if value != proc.call
+  #     return if Time.now - time > BLOCK_TIMEOUT
+  #     puts Time.now - time
+  #     sleep 0.1
+  #   end
+  # end
+
+
+
+  # ------
 
 
   # unused?
