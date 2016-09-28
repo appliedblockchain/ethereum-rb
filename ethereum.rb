@@ -59,3 +59,5 @@ if DEMO
   # irb -r ./ethereum.rb
   # e = Ethereum::Eth.new; (e.methods - Object.methods).sort
 end
+
+puts "status:OK" unless [nil, ''].include? ENV["CHECK"]

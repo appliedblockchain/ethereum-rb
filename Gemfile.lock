@@ -1,8 +1,22 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    diff-lcs (1.2.5)
     digest-sha3 (1.1.0)
     oj (2.17.4)
+    rspec (3.5.0)
+      rspec-core (~> 3.5.0)
+      rspec-expectations (~> 3.5.0)
+      rspec-mocks (~> 3.5.0)
+    rspec-core (3.5.3)
+      rspec-support (~> 3.5.0)
+    rspec-expectations (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-mocks (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-support (3.5.0)
 
 PLATFORMS
   ruby
@@ -10,6 +24,7 @@ PLATFORMS
 DEPENDENCIES
   digest-sha3
   oj
+  rspec
 
 BUNDLED WITH
    1.12.5

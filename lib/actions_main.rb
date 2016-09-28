@@ -1,10 +1,18 @@
+
 module ActionsMain
 
+  # Get function (not an http method, not a GET request, it just reads data from ethereum - reads via RPC from contract data storage)
+  #
+  #
   def get(contract:, method:, params: [])
+    # setting up (config)
+    #
     from = @coinbase
     contract = @interface[contract]
     contract_address = contract[:address]
 
+    # setting up (#chunk-chunk #chunking)
+    #
     method_name = method
     method = contract[:methods].find{ |m| m["name"] == method_name.to_s }
     raise "Cannot contract method '#{method_name}' (contract: #{contract[:class_name]})" unless method
@@ -13,6 +21,8 @@ module ActionsMain
     # raise sig.inspect
     raise "Cannot find sha3 signature for method '#{method}'" unless sig
 
+    # processing data - data transformation
+    #
     params = transform_params params, inputs: method[:inputs]
     data = "#{sig}#{params.join}"
 
@@ -20,10 +30,13 @@ module ActionsMain
     outputs = method[:outputs]
 
     puts "get #{contract[:class_name]}.#{method_name}(#{params.join ", "})"
+    # this is the main call
     resp = read [{from: from, to: contract_address, data: data}]
-    resp = parse resp
+    resp = parse resp # parsing
     puts "Resp (raw): #{resp}" if DEBUG
 
+    # debug (has everything happened correctly? + comments)
+    #
 
     # rause
     # resp = parse_types resp, outputs: outputs
@@ -48,7 +61,62 @@ module ActionsMain
     resp
   end
 
+
+  # Set method # ------------------------------------------------#
+  #
+  # write method, transact method - it sets data into contract storage (OP_RETURN functionality) or executes any function that doeas that.
+  #
+  #
+  #         storage
+  #    #-----------------#
+  #    #                 #
+  #    #                 #    <-------- method call ()
+  #    #                 #
+  #    #-----------------#
+  #
+  #
+  #         storage
+  #    #-----------------#
+  #    #                 #
+  #    #      bla        #    <-------- set("bla")
+  #    #                 #
+  #    #-----------------#
+  #
+  #
+
+# This is called OP_RETURN
+
+# like in bitcoin, the one that
+
+# ----------------------------------------
+
+
+  #
+  #         storage
+  #    #-----------------#
+  #    #                 #
+  #    #      bla        #    <-------- set("bla")
+  #    #                 #
+  #    #-----------------#
+  #
+  #
+  #
+  #
+  #    note:
+  #
+  #    this operation on a public blockchain requires a fee (some fraction of millibit in bitcoin
+  #    or maybe a millibit or two in the future
+  #
+  #    if you want something prioritized or if the bitcoin fees have raised a bit
+  #    and an amount of gas (pseudo-ether - cost based on value of th)"
+  #
+  #
+  #
+  #
   def set(contract:, method:, params: [])
+
+
+
     last_block = block_get
     transact contract: contract, method: method, params: params
     if wait_block last_block
