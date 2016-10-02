@@ -20,6 +20,8 @@ module MethodLookup
       "eth_getBalance"
     when "block"
       "eth_blockNumber"
+    when "block_by_num"
+      "eth_getBlockByNumber"
     else
       raise "NOT HANDLED".inspect
     end

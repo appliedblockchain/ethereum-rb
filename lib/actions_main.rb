@@ -32,7 +32,6 @@ module ActionsMain
     puts "get #{contract[:class_name]}.#{method_name}(#{params.join ", "})"
     # this is the main call
     resp = read [{from: from, to: contract_address, data: data}]
-    resp = parse resp # parsing
     puts "Resp (raw): #{resp}" if DEBUG
 
     # debug (has everything happened correctly? + comments)
@@ -114,9 +113,6 @@ module ActionsMain
   #
   #
   def set(contract:, method:, params: [])
-
-
-
     last_block = block_get
     transact contract: contract, method: method, params: params
     if wait_block last_block
@@ -152,7 +148,6 @@ module ActionsMain
 
     puts "set #{contract[:class_name]}.#{method_name}(#{params_raw.join ", "})"
     resp = write [{from: from, to: contract_address, data: data, gas: gas}]
-    resp = parse resp
 
     resp
   end

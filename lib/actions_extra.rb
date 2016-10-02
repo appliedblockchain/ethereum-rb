@@ -2,12 +2,12 @@ module ActionsExtra
 
   def block_get
     # puts "."
-    res = parse block
+    res = block
     # puts "Block: #{res}"# if DEBUG
-    res
+    "#{res}".hex
   end
 
-  # 
+  #
   # # not used yet
   #
   # # TODO useful for public chain: estimate gas cost

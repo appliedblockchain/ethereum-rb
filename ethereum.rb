@@ -34,7 +34,7 @@ module Ethereum
       @coinbase = coinbase
       puts "Coinbase: #{@coinbase}"
       puts "Balance: #{balance}"
-      puts "Block: #{block_get.hex}"
+      puts "Block: #{block_get}"
       puts "Contracts: #{@interface.map{ |contr, interf| "#{contr}:#{interf[:address]}" }.join " - "}"
       puts "\n"
     end

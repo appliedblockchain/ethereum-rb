@@ -12,6 +12,7 @@ module Ethereum::Connection
     end
 
     def start(&block)
+      check_ipc_file!
       @socket = UNIXSocket.new IPC_PATH
       if block_given?
         block.call self
@@ -31,6 +32,12 @@ module Ethereum::Connection
 
     def close
       @socket.close
+    end
+
+    private
+
+    def check_ipc_file!
+      raise "IPC file not found at path '#{IPC_PATH}' - Make sure parity/geth is running? ('cd parity; ./run')" unless  File.exists? IPC_PATH
     end
   end
 

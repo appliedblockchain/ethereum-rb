@@ -15,14 +15,18 @@ module RpcCalls
   end
 
   def coinbase
-    res = @conn.call_method "coinbase"
-    parse res
+    @conn.call_method "coinbase"
   end
 
   def balance(args=[])
     args = [coinbase] if args.empty?
-    res = @conn.call_method "balance", args: args
-    parse res
+    @conn.call_method "balance", args: args
+  end
+
+  def block_by_num(num)
+    num = "0x#{num.to_s(16)}"
+    res = @conn.call_method "block_by_num", args: [num, true]
+    sym_keys res
   end
 
   # def cost_gas(args=[])

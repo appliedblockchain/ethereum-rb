@@ -29,7 +29,7 @@ module ResponseParsing
 
   # util
 
-  def parse(resp)
+  def parse(resp, raw: false)
     begin
       resp = JSON.parse resp
     rescue TypeError => err
@@ -38,7 +38,7 @@ module ResponseParsing
       puts "#{resp}\n"
       raise err
     end
-    resp["result"]
+    raw ? resp : resp["result"]
   end
 
   # TODO: types
