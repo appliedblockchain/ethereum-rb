@@ -121,19 +121,47 @@ module Ethereum
       self.from_utf8(bytes).ljust(64, '0')
     end
 
+    def bytes_dynamic_to_payload(bytes)
+      size = bytes.size
+      size = (size.to_f / 64).ceil
+      size = uint_to_payload size*64
+      pad  = uint_to_payload 1
+
+      payload = self.from_utf8(bytes).ljust 64, '0'
+      "#{size}#{pad}#{payload}"
+    end
+
+    def bytes_dynamic_from_payload(bytes)
+      self.to_utf8(bytes)
+    end
+
     def get_base_type(typename)
       typename.gsub(/\d+/,'')
     end
 
+    # main methods
+
+    # FIXME: fix bytes type
+
     def to_payload(args)
-      converter = "#{self.get_base_type(args[0])}_to_payload".to_sym
-      self.send(converter, args[1])
+      if args[0] == "bytes"
+        bytes_dynamic_to_payload args[1]
+      else
+        converter = "#{self.get_base_type(args[0])}_to_payload".to_sym
+        self.send(converter, args[1])
+      end
     end
 
     def from_payload(args)
-      converter = "output_to_#{self.get_base_type(args[0])}".to_sym
-      self.send(converter, args[1])
+      if args[0] == "bytes"
+        bytes_dynamic_from_payload args[1]
+      else
+        converter = "output_to_#{self.get_base_type(args[0])}".to_sym
+        self.send(converter, args[1])
+      end
     end
+
+    #
 
     def output_to_address(bytes)
       self.to_address(bytes)

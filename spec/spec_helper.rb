@@ -37,4 +37,4 @@ def check_match(source, target)
 end
 
 
-PATH = File.expand_path "../../", __FILE__
+ETH_PATH = File.expand_path "../../", __FILE__

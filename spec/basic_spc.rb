@@ -29,7 +29,7 @@ require_relative 'spec_helper'
 # expected = "long match string"
 expected = /status:OK/i
 
-output = exec "#{PATH}/run"
+output = exec "#{ETH_PATH}/run"
 
 # expect output, :is, expected
 expect output, :=~, expected
@@ -62,7 +62,7 @@ exp2 = /entry: {"_id"=>(\d+), "name"=>"(\w+)"}/ #
 exp3 = /set Entries\.update\((\d+), (\w+)\)/
 # exp3 = /set Entries.update(1, asdasd)/
 
-output = exec "ruby #{PATH}/tmp/basic_example.rb"
+output = exec "ruby #{ETH_PATH}/tmp/basic_example.rb"
 
 expectations = [exp0, exp1, exp2, exp3]
 expectations.map do |expected|

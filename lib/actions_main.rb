@@ -8,7 +8,7 @@ module ActionsMain
     # setting up (config)
     #
     from = @coinbase
-    contract = @interface[contract]
+    contract = @interface.fetch contract
     contract_address = contract[:address]
 
     # setting up (#chunk-chunk #chunking)
@@ -25,7 +25,7 @@ module ActionsMain
     #
     params = transform_params params, inputs: method[:inputs]
     data = "#{sig}#{params.join}"
-
+    p data
     # raise contract.inspect
     outputs = method[:outputs]
 
@@ -128,7 +128,7 @@ module ActionsMain
 
   def transact(contract:, method:, params: [])
     from = @coinbase
-    contract = @interface[contract]
+    contract = @interface.fetch contract
     contract_address = contract[:address]
 
     method_name = method
@@ -142,6 +142,8 @@ module ActionsMain
     params_raw = params
     params = transform_params params, inputs: method[:inputs]
     data = "#{sig}#{params.join}"
+
+    puts "set data: #{data}"
 
     # gas = "0x8e52"
     gas = "0x100000"

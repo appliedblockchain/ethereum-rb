@@ -8,11 +8,14 @@ Bundler.require :default
 Oj.default_options = { mode: :compat }
 
 path = File.expand_path "../", __FILE__
-PATH     = path
-APP_PATH = path
+ETH_PATH = path
 
 # ---------
 # configs:
+
+ETH_LOG = false
+# ETH_LOG = true # enable logs for debugging purposes (development)
+
 
 IPC_PATH = "#{ENV["HOME"]}/.parity/jsonrpc.ipc"
 
@@ -22,7 +25,11 @@ RPC_PORT = "8545"
 
 
 CONTRACTS_DIR = "#{path}/contracts"
-CONFIG_DIR    = "#{path}/config"
+CONFIG_DIR    = if defined? ETH_CONFIG_DIR
+  ETH_CONFIG_DIR
+else
+  "#{path}/config"
+end
 
 # ---
 
@@ -42,7 +49,7 @@ require_relative 'lib/utils'
 require_relative 'lib/types'
 require_relative 'lib/crypto'
 include Crypto
-require_relative 'lib/parsing'
+# require_relative 'lib/parsing' # not needed, using lib/vendor/formatter from digix, need to implement bytes
 require_relative 'lib/formatting'
 require_relative 'lib/rpc_calls'
 require_relative 'lib/tx_handlers'
@@ -62,7 +69,7 @@ module Ethereum
     include Interface
     include TxHandlers
     include ResponseParsing
-    include Parsing
+    # include Parsing
     include Formatting
     include RpcCalls
     include ActionsMain
