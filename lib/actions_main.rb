@@ -23,6 +23,7 @@ module ActionsMain
 
     # processing data - data transformation
     #
+    puts "GET - transforming inputs"
     params = transform_params params, inputs: method[:inputs]
     data = "#{sig}#{params.join}"
     p data
@@ -37,12 +38,19 @@ module ActionsMain
     # debug (has everything happened correctly? + comments)
     #
 
+    # 0x8eaa6ac06100000000000000000000000000000000000000000000000000000000000000
+
+    # 0x8eaa6ac06100000000000000000000000000000000000000000000000000000000000000
+
     # rause
     # resp = parse_types resp, outputs: outputs
     # puts "Resp (types): #{resp}" if DEBUG
 
     # resp = FRM.from_payload(resp)
     # resp = [resp] unless resp.is_a? Array
+    puts "GET - transforming outputs"
+    puts "outputs: #{method[:outputs].inspect}"
+    puts "resp: #{resp.inspect}"
     resp = transform_outputs resp, outputs: method[:outputs]
 
     resp = if resp.size == 1
@@ -140,7 +148,8 @@ module ActionsMain
     raise "Cannot find sha3 signature for method '#{method}'" unless sig
 
     params_raw = params
-    params = transform_params params, inputs: method[:inputs]
+    puts "SET - transforming params"
+    params = transform_params params, inputs: method[:inputs], set: true
     data = "#{sig}#{params.join}"
 
     puts "set data: #{data}"

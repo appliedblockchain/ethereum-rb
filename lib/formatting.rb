@@ -4,10 +4,11 @@ module Formatting
 
   # transform input params (set)
   #
-  def transform_params(params, inputs:)
+  def transform_params(params, inputs:, set: false)
     raise "\n\nError: inputs should be or behave like an array - inputs.class: #{inputs.class}\n\n" unless inputs.is_a? Array
 
     input_types = inputs.map{ |inp| inp["type"] }
+
     params_tuples = input_types.zip params
 
     puts "transform_params - params_tuples: #{params_tuples.inspect}" if ETH_LOG
@@ -19,10 +20,30 @@ module Formatting
       params << FRM.to_payload(param)
     end
 
-    params = [params.first[128..-1]] if input_types.include? "bytes"
+    puts "transform_params - mid transformation:   #{params.inspect}" if ETH_LOG
 
+    #
+    # if input_types.include? "bytes"
+    #   pars = []
+    #   input_types.each_with_index do |type, idx|
+    #     param = params[idx]
+    #     param = if type == "bytes"
+    #       if set
+    #         param[128..-1]
+    #       else
+    #         p param
+    #         puts "<<"
+    #         "00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000001#{param}"
+    #       end
+    #     end
+    #     pars << param
+    #   end
+    #
+    #   params = [pars.join]
+    # end
+    # raise params.inspect  if input_types.include? "bytes"
 
-    puts "params after transformation: #{params.inspect}" if ETH_LOG
+    puts "transform_params - after transformation: #{params.inspect}" if ETH_LOG
     params
   end
 
@@ -61,6 +82,8 @@ module Formatting
     params_tuples.each do |param|
       params << FRM.from_payload(param)
     end
+
+    puts "transform_outputs - transformed outputs:\n #{params.inspect}\n\n"
     params
   end
 

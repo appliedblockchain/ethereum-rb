@@ -123,9 +123,11 @@ module Ethereum
 
     def bytes_dynamic_to_payload(bytes)
       size = bytes.size
-      size = (size.to_f / 64).ceil
-      size = uint_to_payload size*64
-      pad  = uint_to_payload 1
+      size_chars = size
+      # size = (size.to_f / 64).ceil
+      # size = uint_to_payload size*64
+      size = uint_to_payload 64
+      pad  = uint_to_payload size_chars
 
       payload = self.from_utf8(bytes).ljust 64, '0'
       "#{size}#{pad}#{payload}"
