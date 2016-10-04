@@ -83,7 +83,7 @@ module Formatting
       params << FRM.from_payload(param)
     end
 
-    puts "transform_outputs - transformed outputs:\n #{params.inspect}\n\n"
+    puts "transform_outputs - transformed outputs:\n #{params.inspect}\n\n" if ETH_LOG # 2
     params
   end
 

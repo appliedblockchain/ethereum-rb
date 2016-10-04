@@ -48,9 +48,9 @@ module ActionsMain
 
     # resp = FRM.from_payload(resp)
     # resp = [resp] unless resp.is_a? Array
-    puts "GET - transforming outputs"
-    puts "outputs: #{method[:outputs].inspect}"
-    puts "resp: #{resp.inspect}"
+    puts "GET - transforming outputs" if ETH_LOG
+    puts "outputs: #{method[:outputs].inspect}" if ETH_LOG # 2
+    puts "resp: #{resp.inspect}" if ETH_LOG # 2
     resp = transform_outputs resp, outputs: method[:outputs]
 
     resp = if resp.size == 1
@@ -148,11 +148,11 @@ module ActionsMain
     raise "Cannot find sha3 signature for method '#{method}'" unless sig
 
     params_raw = params
-    puts "SET - transforming params"
+    puts "SET - transforming params" if ETH_LOG # 2
     params = transform_params params, inputs: method[:inputs], set: true
     data = "#{sig}#{params.join}"
 
-    puts "set data: #{data}"
+    puts "set data: #{data}" if ETH_LOG # 2
 
     # gas = "0x8e52"
     gas = "0x100000"

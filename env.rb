@@ -13,8 +13,8 @@ ETH_PATH = path
 # ---------
 # configs:
 
-# ETH_LOG = false
-ETH_LOG = true # enable logs for debugging purposes (development)
+ETH_LOG = false
+# ETH_LOG = true # enable logs for debugging purposes (development)
 
 
 IPC_PATH = "#{ENV["HOME"]}/.parity/jsonrpc.ipc"
