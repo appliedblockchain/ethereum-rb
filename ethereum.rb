@@ -10,6 +10,8 @@ DEBUG_CONN = false
 module Ethereum
   class Eth
 
+    attr_reader :interface
+
     def initialize
       @interface = load_interface
       @conn = Connection::IPC.new

@@ -1,3 +1,4 @@
+module Ethereum
 module Formatting
 
   private
@@ -56,24 +57,19 @@ module Formatting
     output_types = outputs.map{ |out| out["type"] }
     params_tuples = if output_types.include? "bytes"
       if output_types.size > 1
-        raise "TODO - support multiple byte types".inspect
+        if output_types == ["bytes32", "bytes"]
+          head = params.scan /.{64}/
+          head = head[0]
+          tail = params[191..-1].inspect # 191 = 64*3
+          output_types.zip [head, tail]
+        else
+          raise "Support multiple byte types not yet implemented (sorry)".inspect # TODO!
+        end
       else
         params = params.scan /.{64}/
         head, tail = params[0..1], params[2..-1].join
-        # raise [head, tail].inspect
         output_types.zip [tail]
       end
-
-      # params = params.scan /.{64}/
-      # output_types.map do |type|
-      #   head, tail = params[0], params[1..-1]
-      #   if type == "bytes"
-      #     params = tail[1..-1]
-      #   else
-      #     params = tail
-      #   end
-      # end
-      # raise params.inspect
     else
       params = params.scan /.{64}/
       output_types.zip params
@@ -102,4 +98,5 @@ module Formatting
   #   end
   # end
 
+end
 end

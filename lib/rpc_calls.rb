@@ -24,8 +24,14 @@ module RpcCalls
   end
 
   def block_by_num(num)
+    return nil if num < 1
     num = "0x#{num.to_s(16)}"
     res = @conn.call_method "block_by_num", args: [num, true]
+    sym_keys res
+  end
+
+  def transaction(tx_hash)
+    res = @conn.call_method "transaction", args: [tx_hash]
     sym_keys res
   end
 

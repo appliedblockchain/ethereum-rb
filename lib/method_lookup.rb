@@ -22,6 +22,8 @@ module MethodLookup
       "eth_blockNumber"
     when "block_by_num"
       "eth_getBlockByNumber"
+    when "transaction"
+      "eth_getTransactionByHash"
     else
       raise "NOT HANDLED".inspect
     end
