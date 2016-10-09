@@ -67,7 +67,8 @@ module Formatting
         end
       else
         params = params.scan /.{64}/
-        head, tail = params[0..1], params[2..-1].join
+        pars = (params[2..-1] || []).join
+        head, tail = params[0..1], pars
         output_types.zip [tail]
       end
     else
