@@ -50,19 +50,29 @@ module Ethereum::Connection
       @uri = URI url
       header = {'Content-Type' => 'application/json'}
       @req = Net::HTTP::Post.new @uri, header
+      @block = false
     end
 
     def start(&block)
-      Net::HTTP.start(@uri.host, @uri.port) do |http|
-        @http = http
-        block.call self
+      if block_given?
+        @block = true
+        Net::HTTP.start(@uri.host, @uri.port) do |http|
+          @http = http
+          block.call self
+        end
       end
     end
 
     def call(payload)
       # puts "payload: #{payload}"
       @req.body = payload
-      resp = @http.request @req
+      resp = if @block 
+        @http.request @req
+      else
+        Net::HTTP.start(@uri.host, @uri.port) do |http|
+          http.request @req
+        end
+      end
       case resp
       when Net::HTTPSuccess
         resp.body
