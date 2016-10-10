@@ -23,10 +23,10 @@ module ActionsMain
 
     # processing data - data transformation
     #
-    puts "GET - transforming inputs"
+    puts "GET - transforming inputs" if DEBUG
     params = transform_params params, inputs: method[:inputs]
     data = "#{sig}#{params.join}"
-    p data
+    puts "data: #{data}" if DEBUG
     # raise contract.inspect
     outputs = method[:outputs]
 
