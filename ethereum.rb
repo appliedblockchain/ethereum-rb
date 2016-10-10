@@ -1,10 +1,10 @@
 require_relative 'env'
 
-DEBUG = true
-# DEBUG = false
+DEBUG = false
+# DEBUG = true
 
-# DEBUG_CONN = true
 DEBUG_CONN = false
+# DEBUG_CONN = true
 
 
 module Ethereum
