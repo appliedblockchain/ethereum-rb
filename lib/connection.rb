@@ -25,6 +25,7 @@ module Ethereum::Connection
       # puts "Payload: #{payload}"
       @socket.puts payload
       # msg =  @socket.recv 1000000
+      # FIXME: there's probably a better way to do this
       msg =  @socket.recv 10000000
       # msg += @socket.recv 10000000
       msg
@@ -66,7 +67,7 @@ module Ethereum::Connection
     def call(payload)
       # puts "payload: #{payload}"
       @req.body = payload
-      resp = if @block 
+      resp = if @block
         @http.request @req
       else
         Net::HTTP.start(@uri.host, @uri.port) do |http|

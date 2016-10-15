@@ -20,7 +20,8 @@ module Ethereum::CRU
   end
 
   def count
-    ETH.get contract: :entries, method: :getEntriesCount, params: []
+    ETH.get contract: :entries, method: :entriesCount, params: []
+    # ETH.get contract: :entries, method: :getEntriesCount, params: []
   end
 end
 

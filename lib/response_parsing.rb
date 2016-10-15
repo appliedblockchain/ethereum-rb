@@ -2,6 +2,22 @@ module ResponseParsing
 
   private
 
+
+  # TODO: move into Utils::ParseJSON or somewhere similar
+
+  def parse(resp, raw: false)
+    begin
+      resp = JSON.parse resp
+    rescue TypeError => err
+      puts "error parsing JSON"
+      puts "original:"
+      puts "#{resp}\n"
+      raise err
+    end
+    raw ? resp : resp["result"]
+  end
+
+
   # TODO: remove - not used really
   #
   # def parse_get_resp(resp, outputs:)
@@ -26,21 +42,5 @@ module ResponseParsing
   #   return output unless output.keys == [""]
   #   output[""]
   # end
-
-  # util
-
-  def parse(resp, raw: false)
-    begin
-      resp = JSON.parse resp
-    rescue TypeError => err
-      puts "error parsing JSON"
-      puts "original:"
-      puts "#{resp}\n"
-      raise err
-    end
-    raw ? resp : resp["result"]
-  end
-
-  # TODO: types
 
 end

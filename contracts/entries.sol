@@ -1,7 +1,7 @@
 contract Entries {
 
   mapping(uint => Entry) entries;
-  uint entriesCount = 0;
+  uint public entriesCount = 0;
 
   struct Entry {
     uint    id;
@@ -44,8 +44,8 @@ contract Entries {
     entry.name = _name;
   }
 
-  function getEntriesCount() constant returns (uint) {
+  /*function getEntriesCount() constant returns (uint) {
     return entriesCount;
-  }
+  }*/
 
 }

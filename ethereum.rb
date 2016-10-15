@@ -44,7 +44,7 @@ module Ethereum
 
 end
 
-DEMO = false
+DEMO = ENV["DEMO_MODE"] || false
 
 # demo usage
 

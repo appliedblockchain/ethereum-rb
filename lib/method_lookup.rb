@@ -1,8 +1,10 @@
 module MethodLookup
 
+  # map ruby methods to ethereum RPC methods - the goal is to simplify the API a bit - a 1:1 mapping can be done as well (also by trimming all the prefixes like eth_ shh_ and underscoring the snake cased methods)
+
   # a good reference to see which methods are already implemented
 
-  # TODO: re-integrate with main code later
+  # TODO: re-integrate with another interface file later.. maybe
 
   def lookup_method(name)
     case name

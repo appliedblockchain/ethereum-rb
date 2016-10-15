@@ -6,6 +6,8 @@ module TxHandlers
 
   # currently used
   #
+  # This strategies polls the client for a new block. It resumes code execution as soon as a new block is found (this assumes that you transaction made into a block, which is usually the case of test/dev/private chains - for public chain a simple strategy is to wait for a changed value)  
+  #
   def wait_block(last_block)
     time = Time.now
     loop do

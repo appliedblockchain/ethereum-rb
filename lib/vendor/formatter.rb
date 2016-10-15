@@ -1,4 +1,16 @@
 # from DigixGlobal/ethereum-ruby on github
+#
+# modified by makevoid
+#
+# license: MIT
+#
+# original: https://github.com/DigixGlobal/ethereum-ruby/blob/2c9b79c3e9f9e1f8f9569fb26162888a081c0e38/lib/ethereum/formatter.rb
+#
+#
+# changeset from original:
+#
+# - add support for byte types (TODO needs to be finished)
+#
 
 module Ethereum
   class Formatter

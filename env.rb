@@ -49,7 +49,6 @@ require_relative 'lib/utils'
 require_relative 'lib/types'
 require_relative 'lib/crypto'
 include Crypto
-# require_relative 'lib/parsing' # not needed, using lib/vendor/formatter from digix, need to implement bytes
 require_relative 'lib/formatting'
 require_relative 'lib/rpc_calls'
 require_relative 'lib/tx_handlers'
@@ -69,7 +68,6 @@ module Ethereum
     include Interface
     include TxHandlers
     include ResponseParsing
-    # include Parsing
     include Formatting
     include RpcCalls
     include ActionsMain
