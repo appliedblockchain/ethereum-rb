@@ -11,7 +11,7 @@ module TxHandlers
   def wait_block(last_block)
     time = Time.now
     loop do
-      return true if last_block != block_get
+      return true  if last_block != block_get
       return false if Time.now - time > BLOCK_TIMEOUT_SHORT
       # sleep 0.001 # lowest number #  1ms
       sleep 0.01    # good amount   # 10ms

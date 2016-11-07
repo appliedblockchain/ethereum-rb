@@ -21,7 +21,7 @@ IPC_PATH = "#{ENV["HOME"]}/.parity/jsonrpc.ipc"
 
 # RPC_HOST = "http://127.0.0.1"
 RPC_HOST = "localhost"
-RPC_PORT = "8545"
+RPC_PORT = ENV["APP_PORT"] || "8545"
 
 
 CONTRACTS_DIR = "#{path}/contracts"

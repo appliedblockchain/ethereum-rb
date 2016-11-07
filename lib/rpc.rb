@@ -10,13 +10,13 @@ module Ethereum::Connection::RPC
     @id
   end
 
-  def method(command, args: [])
-    { jsonrpc: "2.0", method: command, params: args, id: get_id }.to_json
+  def rpc_method(command, args: [])
+    Oj.dump jsonrpc: "2.0", method: command, params: args, id: get_id
   end
 
   def call_method(method_name, args: [])
     method_name = lookup_method method_name
-    payload = method method_name, args: args
+    payload = rpc_method method_name, args: args
     resp = call payload
     check_for_errors resp, method_name: method_name, args: args
     resp = parse resp
