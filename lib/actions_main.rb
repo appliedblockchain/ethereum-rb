@@ -15,7 +15,7 @@ module ActionsMain
     #
     method_name = method
     method = contract[:methods].find{ |m| m["name"] == method_name.to_s }
-    raise "Cannot contract method '#{method_name}' (contract: #{contract[:class_name]})" unless method
+    raise "Cannot call contract method '#{method_name}' (contract: #{contract[:class_name]})" unless method
     method = sym_keys method
     sig = method[:methodId]
     # raise sig.inspect
@@ -141,7 +141,7 @@ module ActionsMain
 
     method_name = method
     method = contract[:methods].find{ |m| m["name"] == method_name.to_s }
-    raise "Cannot contract method '#{method_name}' (contract: #{contract[:class_name]})" unless method
+    raise "Cannot call contract method '#{method_name}' (contract: #{contract[:class_name]})" unless method
     method = sym_keys method
     sig = method[:methodId]
     # raise sig.inspect
