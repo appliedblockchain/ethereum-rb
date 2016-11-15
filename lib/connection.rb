@@ -78,6 +78,8 @@ module Ethereum::Connection
       when Net::HTTPSuccess
         resp.body
       else
+        puts "Got HTTP Error when contacting ethereum [via HTTP RPC]"
+        puts resp.body
         resp.error!
       end
     end
