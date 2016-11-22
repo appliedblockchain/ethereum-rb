@@ -16,8 +16,8 @@ module Ethereum
       @interface = load_interface
 
       # if DEFAULT_METHOD == :ipc
-      @conn = Connection::IPC.new
-      # @conn = Connection::HTTP.new
+      # @conn = Connection::IPC.new
+      @conn = Connection::HTTP.new
     end
 
     def start(&block)
