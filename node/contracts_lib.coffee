@@ -15,7 +15,8 @@ stringify = (obj) ->
   JSON.stringify obj
 
 
-DEBUG = true
+# DEBUG = true
+DEBUG = false
 
 # configs (paths)
 #

@@ -20,6 +20,7 @@ module Ethereum::Connection::RPC
     resp = call payload
     check_for_errors resp, method_name: method_name, args: args
     resp = parse resp
+    # puts "RPC Response: #{resp}"
     resp
   end
 
