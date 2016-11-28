@@ -24,10 +24,10 @@ RPC_HOST = "localhost"
 RPC_PORT = ENV["APP_PORT"] || "8545"
 
 
-CONTRACTS_DIR = "#{path}/contracts"
-CONFIG_DIR    = if defined? ETH_CONFIG_DIR
+CONFIG_DIR = if defined? ETH_CONFIG_DIR
   ETH_CONFIG_DIR
 else
+  raise "Error - config dir was not set - please set 'ETH_CONFIG_DIR' in production" if ENV["RACK_ENV"] == "production"
   "#{path}/config"
 end
 
