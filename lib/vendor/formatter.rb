@@ -77,7 +77,11 @@ module Ethereum
 
     def from_utf8(utf8_string)
       return nil if utf8_string.nil?
-      utf8_string.force_encoding('UTF-8').split("").collect {|x| x.ord.to_s(16)}.join("")
+      begin
+        utf8_string.force_encoding('UTF-8').split("").collect {|x| x.ord.to_s(16)}.join("")
+      rescue ArgumentError => e
+        raise "Invalid UTF-8 String: #{e.inspect}\nutf8_string: #{utf8_string.inspect}"
+      end
     end
 
     def to_address(hexstring)

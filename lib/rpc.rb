@@ -11,7 +11,7 @@ module Ethereum::Connection::RPC
   end
 
   def rpc_method(command, args: [])
-    Oj.dump jsonrpc: "2.0", method: command, params: args, id: get_id
+    Oj.dump({jsonrpc: "2.0", method: command, params: args, id: get_id}, mode: :compat)
   end
 
   def call_method(method_name, args: [])
