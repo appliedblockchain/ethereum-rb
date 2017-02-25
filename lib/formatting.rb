@@ -10,42 +10,16 @@ module Formatting
 
     input_types = inputs.map{ |inp| inp["type"] }
 
-    params_tuples = input_types.zip params
+    value = encode input_types, params
 
-    puts "transform_params - params_tuples: #{params_tuples.inspect}" if ETH_LOG
-    # params = params.map{ |param| param }
-    # # params = params.map{ |param| param.to_s } FIXME
+    value = FRM.from_ascii value
 
-    params = []
-    params_tuples.each do |param|
-      params << FRM.to_payload(param)
-    end
+    puts "transform_params - transformed: #{value.inspect}" if ETH_LOG
 
-    puts "transform_params - mid transformation:   #{params.inspect}" if ETH_LOG
-
+    value
+    # return [] if value.empty?
     #
-    # if input_types.include? "bytes"
-    #   pars = []
-    #   input_types.each_with_index do |type, idx|
-    #     param = params[idx]
-    #     param = if type == "bytes"
-    #       if set
-    #         param[128..-1]
-    #       else
-    #         p param
-    #         puts "<<"
-    #         "00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000001#{param}"
-    #       end
-    #     end
-    #     pars << param
-    #   end
-    #
-    #   params = [pars.join]
-    # end
-    # raise params.inspect  if input_types.include? "bytes"
-
-    puts "transform_params - after transformation: #{params.inspect}" if ETH_LOG
-    params
+    # [value]
   end
 
   # transform output params (set)
@@ -54,34 +28,16 @@ module Formatting
     raise "\n\nError: outputs should be or behave like an array - outputs.class: #{outputs.class}\n\n" unless outputs.is_a? Array
 
     params.gsub! /^0x/, ''
-    output_types = outputs.map{ |out| out["type"] }
-    params_tuples = if output_types.include? "bytes"
-      if output_types.size > 1
-        if output_types == ["bytes32", "bytes"]
-          head = params.scan /.{64}/
-          head = head[0]
-          tail = params[191..-1].inspect # 191 = 64*3
-          output_types.zip [head, tail]
-        else
-          raise "Support multiple byte types not yet implemented (sorry)".inspect # TODO!
-        end
-      else
-        params = params.scan /.{64}/
-        pars = (params[2..-1] || []).join
-        head, tail = params[0..1], pars
-        output_types.zip [tail]
-      end
-    else
-      params = params.scan /.{64}/
-      output_types.zip params
-    end
-    params = []
-    params_tuples.each do |param|
-      params << FRM.from_payload(param)
-    end
 
-    puts "transform_outputs - transformed outputs:\n #{params.inspect}\n\n" if ETH_LOG # 2
-    params
+    output_types = outputs.map{ |out| out["type"] }
+
+    params = FRM.to_ascii params
+
+    values = decode output_types, params
+
+
+    puts "transform_outputs - transformed outputs:\n #{values.inspect}\n\n" if ETH_LOG # 2
+    values
   end
 
   # parse output types

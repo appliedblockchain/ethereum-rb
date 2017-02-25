@@ -25,24 +25,16 @@ module ActionsMain
     #
     puts "GET - transforming inputs" if DEBUG
     params = transform_params params, inputs: method[:inputs]
-    data = "#{sig}#{params.join}"
+    data = "#{sig}#{params}"
     puts "data: #{data}" if DEBUG
     # raise contract.inspect
     outputs = method[:outputs]
 
-    puts "get #{contract[:class_name]}.#{method_name}(#{params.join ", "})"
+    puts "get #{contract[:class_name]}.#{method_name}(#{params})"
     # this is the main call
     resp = read [{from: from, to: contract_address, data: data}]
     puts "Resp (raw): #{resp}" if DEBUG
 
-    # debug (has everything happened correctly? + comments)
-    #
-
-    # 0x8eaa6ac06100000000000000000000000000000000000000000000000000000000000000
-
-    # 0x8eaa6ac06100000000000000000000000000000000000000000000000000000000000000
-
-    # rause
     # resp = parse_types resp, outputs: outputs
     # puts "Resp (types): #{resp}" if DEBUG
 
@@ -52,6 +44,7 @@ module ActionsMain
     puts "outputs: #{method[:outputs].inspect}" if ETH_LOG # 2
     puts "resp: #{resp.inspect}" if ETH_LOG # 2
     resp = transform_outputs resp, outputs: method[:outputs]
+
 
     resp = if resp.size == 1
       resp.first
@@ -150,14 +143,16 @@ module ActionsMain
     params_raw = params
     puts "SET - transforming params" if ETH_LOG # 2
     params = transform_params params, inputs: method[:inputs], set: true
-    data = "#{sig}#{params.join}"
+    data = "#{sig}#{params}"
 
     puts "set data: #{data}" if ETH_LOG # 2
 
     # gas = "0x8e52"
-    gas = "0x100000"
+    # gas = "0x100000"
+    # gas = "0x3fefd8"
+    gas = "0x4fefd8" # 32488100 - limit 32488160 - gaslimit in chain.json is 1C9C380 (30000000) - 1EFBA00
 
-    puts "set #{contract[:class_name]}.#{method_name}(#{params_raw.join ", "})"
+    puts "set #{contract[:class_name]}.#{method_name}(#{params_raw})"
     resp = write [{from: from, to: contract_address, data: data, gas: gas}]
 
     resp

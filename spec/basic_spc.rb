@@ -1,6 +1,6 @@
 # basic spec
 
-require_relative 'spec_helper'
+require_relative 'spec_helper_mini'
 
 
 # simple and naive bash scripts test runner - no deps #pureRuby
