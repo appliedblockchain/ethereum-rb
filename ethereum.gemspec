@@ -16,5 +16,5 @@ Gem::Specification.new do |s|
   s.files        = Dir['Readme.md', "Gemfile", "Gemfile.lock", "*.rb", 'lib/**/*', 'config/**/*', 'node/**/*', 'contracts/**/*']
   s.require_path = '.'
 
-  s.add_runtime_dependency 'digest-sha3', '~> 1.1.0'
+  s.add_runtime_dependency 'digest-sha3'#, '~> 1.1.0'
 end
