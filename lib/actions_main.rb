@@ -149,8 +149,10 @@ module ActionsMain
 
     # gas = "0x8e52"
     # gas = "0x100000"
-    # gas = "0x3fefd8"
-    gas = "0x4fefd8" # 32488100 - limit 32488160 - gaslimit in chain.json is 1C9C380 (30000000) - 1EFBA00
+    # gas = "0x100000"
+    # gas = "0x100000"
+    gas = "0x3fefd8"
+    # gas = "0x4fefd8" # 32488100 - limit 32488160 - gaslimit in chain.json is 1C9C380 (30000000) - 1EFBA00
 
     puts "set #{contract[:class_name]}.#{method_name}(#{params_raw})"
     resp = write [{from: from, to: contract_address, data: data, gas: gas}]
