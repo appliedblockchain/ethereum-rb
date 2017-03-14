@@ -31,6 +31,8 @@ else
   "#{path}/config"
 end
 
+CONF_NILS = true
+
 # ---
 
 # ---
