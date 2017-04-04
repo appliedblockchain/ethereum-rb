@@ -2,15 +2,41 @@
 
 RPC Client
 
+### API
+
+```rb
+require 'ethereum'
+include Ethereum
+
+# ---
+
+ETH.get # call
+ETH.set # sendTransaction
+```
+
+
+### Future API
+
+
+```rb
+ETH::C[:contract_name]
+
+ETH::C[:contract_name] = {
+  properties: {},
+  data:       {},
+}
+```
+
+
 ### Setup
 
 
 **Option 1: Reference it from the Gemfile**
 
     gem "ethereum", git: "https://GITHUB_TOKEN@github.com/appliedblockchain/ethereum.git"
-    
+
 when this will be open source (bytes bug fixed + maybe some basic tests + add more methods probably...), we can simply do:
-    
+
     gem "ethereum", git: "https://github.com/appliedblockchain/ethereum.git"
 
 
@@ -30,7 +56,7 @@ Add to Gemfile
 
     ETH = Ethereum::Eth.new
     ETH.start!
-    
+
     ETH.coinbase #=> "0x1234567..."
 
 
@@ -43,7 +69,7 @@ TODO: document them all
 Returns the node's coinbase:
 
     ETH.coinbase #=>  "0x1234567..."
-    
+
 equivalent of getCoinbase() in web3
 
 #### ETH.block(block_hash)
@@ -53,7 +79,7 @@ Returns the block infos (block id, hash, transaction_ids...)
     ETH.block "0x123456..." #=> {
     #  foo: "TODO: block infos",
     # }
-    
+
 
 equivalent of getBlock() in web3
 
@@ -78,7 +104,7 @@ Calls a contract (getter) - without modifying the state
 
 
     ETH.read "key" #=> "value" # (from SimpleStorage contract)
-    
+
 
 equivalent of `call()` in web3
 
@@ -88,8 +114,8 @@ equivalent of `call()` in web3
 Calls a contract (setter) - pays the gas fee to change the local contract storage / global ethereum state
 
     ETH.write "key", "foobar" #=> true / tx_receipt # (save to SimpleStorage contract - TODO: recheck response, probably we want true in our configuration rather than the tx_receipt which we we don't generally use, 'cause we poll parity)
-    
-    
+
+
 equivalent of `sendTransaction()` in web3
 
 
@@ -98,7 +124,7 @@ equivalent of `sendTransaction()` in web3
 
 RPC Calls List: https://github.com/appliedblockchain/ethereum/blob/master/lib/rpc_calls.rb#L1
 
---- 
+---
 
 notes
 

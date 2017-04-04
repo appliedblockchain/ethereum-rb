@@ -1,5 +1,7 @@
 require_relative 'env'
 
+# loggers
+
 DEBUG = false
 # DEBUG = true
 
@@ -7,7 +9,13 @@ DEBUG_CONN = false
 # DEBUG_CONN = true
 
 
+# main module
+
 module Ethereum
+
+
+  # main class - RPC API
+
   class Eth
 
     attr_reader :interface
@@ -46,24 +54,48 @@ module Ethereum
     end
   end
 
+  alias :RPC :Eth
+
 end
+
+# Ethereum module ends
+
+# Usage Doc
+
+# basic usage (simplest api - scripting level)
+#
+# require 'ethereum'
+# include Ethereum
+#
+# # ---
+#
+# ETH.get # call
+# ETH.set # sendTransaction
+
+# ---
+
+# TODO: to be continued...
+
+
+# ---
+
+# ETH
+
+# ---
+
+# Ethereum::ETH / Ethereum::RPC - ruby implementation of web3 - rpc js
+
+# usage run  in the console
+#
+# irb -r ./ethereum.rb
+# e = Ethereum::Eth.new; (e.methods - Object.methods).sort
+
+
+
+
+# demo mode
 
 DEMO = ENV["DEMO_MODE"] || false
+require_relative 'lib/misc/demo_mode.rb' if DEMO
 
-# demo usage
-
-if DEMO
-  ETH = Ethereum::Eth.new
-
-  ETH.start do |eth|
-    val = eth.get contract: :op_return, method: :data, params: []
-    puts "Finished - got: #{val}"
-  end
-
-  # console
-  #
-  # irb -r ./ethereum.rb
-  # e = Ethereum::Eth.new; (e.methods - Object.methods).sort
-end
-
-puts "status:OK" unless [nil, ''].include? ENV["CHECK"]
+puts "status: OK" unless [nil, ''].include? ENV["CHECK"]
