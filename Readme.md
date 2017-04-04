@@ -2,6 +2,7 @@
 
 RPC Client
 
+
 ### API
 
 ```rb
