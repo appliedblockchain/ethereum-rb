@@ -1,8 +1,13 @@
+GIT
+  remote: https://github.com/steakknife/digest-sha3-ruby.git
+  revision: 8f9581acae2cb03a531bf3d9c8c2c2a8d761ea71
+  specs:
+    digest-sha3 (2.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.3)
-    digest-sha3 (1.1.0)
     oj (2.18.1)
     rlp (0.7.3)
     rspec-core (3.5.4)
@@ -19,7 +24,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  digest-sha3
+  digest-sha3!
   oj
   rlp
   rspec-core
@@ -27,4 +32,4 @@ DEPENDENCIES
   rspec-mocks
 
 BUNDLED WITH
-   1.14.3
+   1.14.6

@@ -1,5 +1,5 @@
 dist/*.js
 node/node_modules/
-config/contracts.json
-config/contracts_interface.json
+config/contracts/contracts.json
+config/contracts/contracts_interface.json
 *.gem
