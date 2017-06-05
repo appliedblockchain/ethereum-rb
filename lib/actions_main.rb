@@ -11,7 +11,7 @@ module ActionsMain
     contract = @interface.fetch contract
     contract_address = contract[:address]
 
-    # setting up (#chunk-chunk #chunking)
+    # setting up
     #
     method_name = method
     method = contract[:methods].find{ |m| m["name"] == method_name.to_s }
@@ -30,7 +30,7 @@ module ActionsMain
     # raise contract.inspect
     outputs = method[:outputs]
 
-    puts "get #{contract[:class_name]}.#{method_name}(#{params})"
+    puts "get #{contract[:class_name]}.#{method_name}(#{params})"  if ETH_LOG
     # this is the main call
     resp = read [{from: from, to: contract_address, data: data}]
     puts "Resp (raw): #{resp}" if DEBUG
@@ -44,7 +44,6 @@ module ActionsMain
     puts "outputs: #{method[:outputs].inspect}" if ETH_LOG # 2
     puts "resp: #{resp.inspect}" if ETH_LOG # 2
     resp = transform_outputs resp, outputs: method[:outputs]
-
 
     resp = if resp.size == 1
       resp.first
@@ -129,6 +128,7 @@ module ActionsMain
 
   def transact(contract:, method:, params: [])
     from = @coinbase
+    raise "Ethereum RPC is not initialized, please run ETH.start! or RPC.start! to have a non-nil coinbase" unless from
     contract = @interface.fetch contract
     contract_address = contract[:address]
 
@@ -154,7 +154,7 @@ module ActionsMain
     gas = "0x3fefd8"
     # gas = "0x4fefd8" # 32488100 - limit 32488160 - gaslimit in chain.json is 1C9C380 (30000000) - 1EFBA00
 
-    puts "set #{contract[:class_name]}.#{method_name}(#{params_raw})"
+    puts "set #{contract[:class_name]}.#{method_name}(#{params_raw})" if ETH_LOG
     resp = write [{from: from, to: contract_address, data: data, gas: gas}]
 
     resp

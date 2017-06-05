@@ -1,6 +1,8 @@
+require_relative 'spec_helper'
 require_relative '../ethereum'
 
 ETH = Ethereum::Eth.new
+ETH.start!
 
 describe "RPC Calls" do
   it "gets block height" do
@@ -23,13 +25,25 @@ describe "RPC Calls" do
   end
 
   specify "get (eth_call)" do
+    response = ETH.set contract: :key_value, method: :set, params: ["foo", ""]
+    response.should be true
+
     # note: this spec requires deployed contracts
-    ETH.get contract: :key_value, method: :get, params: ["foo"]
+    value = ETH.get contract: :key_value, method: :get, params: ["foo"]
+    value.should eq "" # TODO: consider returning nil
   end
 
   specify "set (eth_sendTransaction)" do
+    response = ETH.set contract: :key_value, method: :set, params: ["foo", "bar"]
+    response.should be true
 
+    # TODO:
+    # expect {
+    #   ETH.set contract: :key_value, method: :set, params: ["foo", "bar", "asd"]
+    # }.to raise_error(RuntimeError)
 
+    value = ETH.get contract: :key_value, method: :get, params: ["foo"]
+    value.should eq "bar"
   end
 
 end
