@@ -46,6 +46,8 @@ module Ethereum
     end
   end
 
+  # alias :RPC :Eth
+  RPC = Eth
 end
 
 DEMO = ENV["DEMO_MODE"] || false
