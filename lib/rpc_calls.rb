@@ -35,6 +35,21 @@ module RpcCalls
     sym_keys res
   end
 
+  def filter_new(type: "pending")
+    res = @conn.call_method "filter_new"#, args: [type]
+    # sym_keys res
+  end
+
+  def filter(filter_id)
+    res = @conn.call_method "filter", args: [filter_id]
+    # sym_keys res
+  end
+
+  def filter_uninstall(filter_id)
+    res = @conn.call_method "filter_uninstall", args: [filter_id]
+    # sym_keys res
+  end
+
   # def cost_gas(args=[])
   #   @conn.call_method "cost", args: args
   # end

@@ -54,7 +54,8 @@ module Ethereum
     end
   end
 
-  alias :RPC :Eth
+  # alias :RPC :Eth
+  RPC = Eth
 
 end
 

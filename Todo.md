@@ -1,5 +1,10 @@
 # TODO
 
+
+TODO: remove default config files 
+
+
+
 - Add retries against parity returning errors "under stress" (even with the right parameters)
 
     /home/makevoid/apps/ethereum/lib/rpc.rb:31:in `check_for_errors'

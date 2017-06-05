@@ -26,6 +26,13 @@ module MethodLookup
       "eth_getBlockByNumber"
     when "transaction"
       "eth_getTransactionByHash"
+    # watch
+    when "filter_new"
+      "eth_newPendingTransactionFilter"
+    when "filter"
+      "eth_getFilterChanges"
+    when "filter_uninstall"
+      "eth_uninstallFilter"
     else
       raise "NOT HANDLED".inspect
     end
