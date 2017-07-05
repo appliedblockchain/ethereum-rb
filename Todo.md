@@ -3,7 +3,7 @@
 
 TODO: remove default config files 
 
-
+- `eth_estimateGas` [important for public chain]
 
 - Add retries against parity returning errors "under stress" (even with the right parameters)
 
