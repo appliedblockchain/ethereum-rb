@@ -50,12 +50,12 @@ module RpcCalls
     # sym_keys res
   end
 
-  # def cost_gas(args=[])
-  #   @conn.call_method "cost", args: args
-  # end
-  #
-  # def receipt(args=[])
-  #   @conn.call_method "receipt", args: args
-  # end
+  def gas
+    @conn.call_method "gas"
+  end
+
+  def receipt(receipt_id)
+    @conn.call_method "receipt", args: [receipt_id]
+  end
 
 end

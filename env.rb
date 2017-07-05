@@ -5,6 +5,8 @@ require 'json'
 require 'bundler'
 Bundler.require :default
 
+require 'oj'
+
 # Oj.default_options = { mode: :compat }
 
 path = File.expand_path "../", __FILE__

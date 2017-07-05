@@ -14,7 +14,7 @@ module MethodLookup
       "eth_call"
     when "write"
       "eth_sendTransaction"
-    when "cost"
+    when "gas"
       "eth_estimateGas"
     when "receipt"
       "eth_getTransactionReceipt"

@@ -24,7 +24,4 @@ module ActionsExtra
   #   raise resp.inspect
   #   resp
   # end
-  #
-  #
-  # # TODO: receipt - not important
 end

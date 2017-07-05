@@ -41,7 +41,7 @@ module Ethereum
       puts "Coinbase: #{@coinbase}"
       puts "Balance: #{balance}"
       puts "Block: #{block_get}"
-      puts "Contracts: #{@interface.map{ |contr, interf| "#{contr}:#{interf[:address]}" }.join " - "}"
+      puts "Contracts: #{@interface.map{ |contr, interf| "#{contr}:#{interf[:address] || "<no_address>"}" }.join " - "}"
       puts "\n"
     end
   end

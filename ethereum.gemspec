@@ -17,4 +17,5 @@ Gem::Specification.new do |s|
   s.require_path = '.'
 
   s.add_runtime_dependency 'digest-sha3'#, '~> 1.1.0'
+  s.add_runtime_dependency 'oj',          "~> 3.2"
 end
