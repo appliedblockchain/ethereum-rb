@@ -50,22 +50,11 @@ module Ethereum
   RPC = Eth
 end
 
-DEMO = ENV["DEMO_MODE"] || false
 
-# demo usage
 
-if DEMO
-  ETH = Ethereum::Eth.new
+# demo mode
 
-  ETH.start do |eth|
-    val = eth.get contract: :op_return, method: :data, params: []
-    puts "Finished - got: #{val}"
-  end
+DEMO = ENV["DEMO_MODE"] == "1"
+require_relative 'lib/misc/demo_mode.rb' if DEMO
 
-  # console
-  #
-  # irb -r ./ethereum.rb
-  # e = Ethereum::Eth.new; (e.methods - Object.methods).sort
-end
-
-puts "status:OK" unless [nil, ''].include? ENV["CHECK"]
+puts "status: OK" unless [nil, ''].include? ENV["CHECK"]

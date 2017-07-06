@@ -57,6 +57,7 @@ module ActionsMain
       resp_hash
     end
     puts "Resp: #{resp.inspect}" if DEBUG
+    return if CONF_NILS && !resp.nil? && resp.empty?
 
     resp
   end

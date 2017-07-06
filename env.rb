@@ -25,6 +25,7 @@ IPC_PATH = "#{ENV["HOME"]}/.parity/jsonrpc.ipc"
 RPC_HOST = ENV["ETH_APP_HOST"] || "localhost"
 RPC_PORT = ENV["ETH_APP_PORT"] || "8545"
 
+CONF_NILS = true # returns nil instead of blank string if the value is not set
 
 CONFIG_DIR = if defined? ETH_CONFIG_DIR
   ETH_CONFIG_DIR
