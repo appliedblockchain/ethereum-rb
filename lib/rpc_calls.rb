@@ -35,9 +35,19 @@ module RpcCalls
     sym_keys res
   end
 
-  def filter_new(type: "pending")
-    res = @conn.call_method "filter_new"#, args: [type]
+  def filter_new()
+    filter = {} # catch-all filter
+    res = @conn.call_method "filter_new", args: [filter]
     # sym_keys res
+  end
+
+  def filter_get(filter_id)
+    res = @conn.call_method "filter_get", args: [filter_id]
+    # sym_keys res
+  end
+
+  def filter_tx_new(type: "pending")
+    res = @conn.call_method "filter_tx_new"
   end
 
   def filter(filter_id)

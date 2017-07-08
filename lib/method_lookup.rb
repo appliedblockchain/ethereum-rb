@@ -26,8 +26,12 @@ module MethodLookup
       "eth_getBlockByNumber"
     when "transaction"
       "eth_getTransactionByHash"
-    # watch
+    # watch / filters
     when "filter_new"
+      "eth_newFilter"
+    when "filter_get"
+      "eth_getFilterChanges"
+    when "filter_tx_new"
       "eth_newPendingTransactionFilter"
     when "filter"
       "eth_getFilterChanges"
