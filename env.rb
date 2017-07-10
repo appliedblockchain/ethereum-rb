@@ -34,23 +34,6 @@ else
   "#{path}/config"
 end
 
-# ---
-
-# ---
-
-# initialize Ethereum::ABI via gem
-#
-# require "rlp"
-# if ENV["INCLUDED"] == "0" #|| ENV["RACK_ENV"] == "test"
-#   require "ethereum/constant"
-#   require "ethereum/utils"
-#   require "ethereum/exceptions"
-#   require "ethereum/abi"
-#   include Ethereum::ABI
-#   include Ethereum::Utils
-# end
-
-
 # initialize vendored Ethereum::ABI
 #
 require_relative "vendor/ethereum-abi/constant"
@@ -59,7 +42,6 @@ require_relative "vendor/ethereum-abi/exceptions"
 require_relative "vendor/ethereum-abi/abi"
 include EthereumABI::ABI
 include EthereumABI::Utils
-
 
 
 # init main module
@@ -77,8 +59,6 @@ FRM = Ethereum::Formatter.new
 require_relative 'lib/version'
 require_relative 'lib/utils'
 require_relative 'lib/types'
-require_relative 'lib/crypto'
-include Crypto
 require_relative 'lib/formatting'
 require_relative 'lib/rpc_calls'
 require_relative 'lib/tx_handlers'

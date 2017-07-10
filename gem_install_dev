@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+
+# install the gem for development purposes (remember you can also use `path:` in your gemfile to load the gem from your local filesystem for the purpose of testing modifications to this gem)
+
 gem build ethereum.gemspec
 
-gem i ethereum-0.3.0.gem
+gem i ethereum-*

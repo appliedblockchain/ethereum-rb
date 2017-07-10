@@ -149,10 +149,6 @@ module ActionsMain
 
     puts "set data: #{data}" if ETH_LOG # 2
 
-    # gas = "0x8e52"
-    # gas = "0x100000"
-    # gas = "0x100000"
-    # gas = "0x100000"
     gas = ENV["ETH_GAS"] || "0x3fefd8"
     # gas = "0x4fefd8" # 32488100 - limit 32488160 - gaslimit in chain.json is 1C9C380 (30000000) - 1EFBA00
 

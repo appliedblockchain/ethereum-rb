@@ -7,9 +7,6 @@ module ActionsExtra
     "#{res}".hex
   end
 
-  #
-  # # not used yet
-  #
   # # TODO useful for public chain: estimate gas cost
   # # TODO other option - get this estimate from solidity (compilation time)
   #
@@ -24,4 +21,5 @@ module ActionsExtra
   #   raise resp.inspect
   #   resp
   # end
+
 end

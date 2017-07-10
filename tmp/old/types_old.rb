@@ -154,38 +154,3 @@ describe "Types and Formatters - #transform_outputs" do
     out.should == ["@\u0001a"]
   end
 end
-# out.should ==
-
-
-# ---------------------------
-
-
-# transform_output_params
-#
-# transform_outputs
-#
-#
-# params  =
-# outputs =
-# transform_outputs params, outputs: outputs
-
-
-
-# ------------
-
-# notes & code from js implementation of parsing types
-
-
-# parsing bytes<N> from ethereum-js - thanks axic for the js code - hopefully I will be able to make a neat full implementation like him - right now this is a bit half-a**ed
-#
-# size = parseTypeN(type)
-# if ((size % 8) || (size < 8) || (size > 256)) {
-#   throw new Error('Invalid uint<N> width: ' + size)
-# }
-#
-# num = parseNumber(value)
-# if (num.bitLength() > size) {
-#   throw new Error('Supplied uint exceeds width: ' + size + ' vs ' + num.bitLength())
-# }
-#
-# ret.push(num.toArrayLike(Buffer, 'be', size / 8))

@@ -1,6 +1,0 @@
-coffee -o dist -c *.coffee
-
-RPC=1 node dist/contracts_deploy.js
-node dist/contracts_export.js
-
-echo "deployment and export done!"

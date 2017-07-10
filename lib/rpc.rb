@@ -1,6 +1,4 @@
 module Ethereum::Connection::RPC
-  # specific to ethereum
-
   def init_id
     @id = 0
   end

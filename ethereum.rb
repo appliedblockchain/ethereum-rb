@@ -6,7 +6,6 @@ DEBUG = false
 DEBUG_CONN = false
 # DEBUG_CONN = true
 
-
 module Ethereum
   class Eth
 

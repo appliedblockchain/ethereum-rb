@@ -30,7 +30,7 @@ describe "RPC Calls" do
 
     # note: this spec requires deployed contracts
     value = ETH.get contract: :key_value, method: :get, params: ["foo"]
-    value.should eq "" # TODO: consider returning nil
+    value.should eq nil
   end
 
   specify "set (eth_sendTransaction)" do
