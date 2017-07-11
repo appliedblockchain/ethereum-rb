@@ -1,3 +1,5 @@
 language: ruby
 dist: trusty
-script: bundle exec rspec spec/types_spec.rb 
+script: bundle exec rspec spec/types_spec.rb
+notifications:
+  slack: appliedblockchain:fe99Xu0TIlYybDwmQ27zN7lG
