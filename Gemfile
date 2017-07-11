@@ -6,8 +6,11 @@ CI = ENV["CI"] == "true"
 
 gem "oj"
 
-
-gem "digest-sha3", git: "https://github.com/steakknife/digest-sha3-ruby.git" # this fork compiles successfully on linux
+if CI
+  gem "digest-sha3"
+else
+  gem "digest-sha3", git: "https://github.com/steakknife/digest-sha3-ruby.git" # this fork compiles successfully on linux
+end
 
 gem "rlp"
 
