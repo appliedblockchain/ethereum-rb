@@ -29,6 +29,8 @@ CONF_NILS = true # returns nil instead of blank string if the value is not set
 
 CONFIG_DIR = if defined? ETH_CONFIG_DIR
   ETH_CONFIG_DIR
+elsif ENV["CONFIG_DIR"] && !ENV["CONFIG_DIR"].empty?
+  ENV["CONFIG_DIR"]
 else
   raise "Error - config dir was not set - please set 'ETH_CONFIG_DIR' in production" if ENV["RACK_ENV"] == "production"
   "#{path}/config"

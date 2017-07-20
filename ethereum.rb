@@ -1,7 +1,7 @@
 require_relative 'env'
 
-DEBUG = false
-# DEBUG = true
+# DEBUG = false
+DEBUG = true
 
 DEBUG_CONN = false
 # DEBUG_CONN = true

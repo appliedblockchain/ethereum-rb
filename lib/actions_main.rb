@@ -1,6 +1,5 @@
 
 module ActionsMain
-
   # Get function (not an http method, not a GET request, it just reads data from ethereum - reads via RPC from contract data storage)
   #
   #
@@ -14,7 +13,9 @@ module ActionsMain
     # setting up
     #
     method_name = method
-    method = contract[:methods].find{ |m| m["name"] == method_name.to_s }
+
+
+    method = contract[:methods].find{ |m| m[:name] == method_name.to_s }
     raise "Cannot call contract method '#{method_name}' (contract: #{contract[:class_name]})" unless method
     method = sym_keys method
     sig = method[:methodId]
@@ -52,7 +53,7 @@ module ActionsMain
       # render_outputs
       resp_hash = {}
       method[:outputs].each_with_index do |out, idx|
-        resp_hash[out["name"]] = resp[idx]
+        resp_hash[out[:name]] = resp[idx]
       end
       resp_hash
     end
