@@ -38,6 +38,7 @@ end
 
 # initialize vendored Ethereum::ABI
 #
+require_relative "lib/vendor/keccak"
 require_relative "vendor/ethereum-abi/constant"
 require_relative "vendor/ethereum-abi/utils"
 require_relative "vendor/ethereum-abi/exceptions"

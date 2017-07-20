@@ -19,5 +19,8 @@ class User
   end
 end
 
-user = User.get id: 1
-puts "USER: #{user.inspect}"
+count = User.count
+puts "USER count: #{count}"
+
+# user = User.get id: 1
+# puts "USER #1: #{user.inspect}"

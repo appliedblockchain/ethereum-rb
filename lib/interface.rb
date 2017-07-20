@@ -15,6 +15,10 @@ module Ethereum
 
     # this parse has been ported from bapp_parity (from coffeescript to ruby): https://github.com/appliedblockchain/bapp_parity/blob/60f1e69efdb6bc599d60c81ce0bf66b59431bd9e/contract_deploy/src/contracts_lib.coffee#L122-L156
 
+    def keccak(string)
+      Keccak.hexdigest string, 1088, 512, 256
+    end
+
     def parse_interface(interface)
       interface = sym_keys interface
       # ----------
@@ -35,9 +39,7 @@ module Ethereum
 
         type = is_setter ? "setter" : "getter"
         input_types = inputs.map{ |input| input.fetch "type" }
-        method_id = keccak256("#{abi_method.fetch("name")}(#{input_types.join ','})")
-        method_id = "0x#{encode_hex(method_id)[0..7]}"
-        raise method_id.inspect
+        method_id = keccak("#{abi_method.fetch("name")}(#{input_types.join ','})")
 
         method = {
           name:     abi_method.fetch("name"),
