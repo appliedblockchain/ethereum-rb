@@ -19,7 +19,6 @@ module ActionsMain
     raise "Cannot call contract method '#{method_name}' (contract: #{contract[:class_name]})" unless method
     method = sym_keys method
     sig = method[:methodId]
-    # raise sig.inspect
     raise "Cannot find sha3 signature for method '#{method}'" unless sig
 
     # processing data - data transformation
@@ -140,7 +139,6 @@ module ActionsMain
     raise "Cannot call contract method '#{method_name}' (contract: #{contract[:class_name]})" unless method
     method = sym_keys method
     sig = method[:methodId]
-    # raise sig.inspect
     raise "Cannot find sha3 signature for method '#{method}'" unless sig
 
     params_raw = params

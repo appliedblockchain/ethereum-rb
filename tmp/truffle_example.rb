@@ -24,5 +24,5 @@ end
 count = User.count
 puts "USER count: #{count}"
 
-# user = User.get id: 1
-# puts "USER #1: #{user.inspect}"
+user = User.get id: 1
+puts "USER #1: #{user.inspect}"

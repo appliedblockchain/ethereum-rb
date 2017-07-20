@@ -26,7 +26,7 @@ module Ethereum
       # get this via `truffle test` looking at any `Contract created:` log lines in `ethereumjs-testrpc` (docker logs contaioner_id | grep created )
       config_address = ENV["CONTRACT_ADDRESS"]
 
-      contract_class = ENV["CONTRACT_NAME"] 
+      contract_class = ENV["CONTRACT_NAME"]
       abi = interface.fetch :abi
       methods = []
       getters = []
@@ -40,6 +40,7 @@ module Ethereum
         type = is_setter ? "setter" : "getter"
         input_types = inputs.map{ |input| input.fetch "type" }
         method_id = keccak("#{abi_method.fetch("name")}(#{input_types.join ','})")
+        method_id = "0x#{method_id[0..7]}"
 
         method = {
           name:     abi_method.fetch("name"),
