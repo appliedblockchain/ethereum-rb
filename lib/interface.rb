@@ -24,9 +24,9 @@ module Ethereum
       # ----------
 
       # get this via `truffle test` looking at any `Contract created:` log lines in `ethereumjs-testrpc` (docker logs contaioner_id | grep created )
-      config_address = "0xaa93eacd11ea89a1b18ba40baa83e0184c08b906"
+      config_address = ENV["CONTRACT_ADDRESS"]
 
-      contract_class = "Cygnetise"
+      contract_class = ENV["CONTRACT_NAME"] 
       abi = interface.fetch :abi
       methods = []
       getters = []
