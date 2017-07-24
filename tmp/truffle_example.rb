@@ -1,6 +1,6 @@
 path_out = File.expand_path "../../../", __FILE__
 ENV["CONFIG_DIR"] = "#{path_out}/cygnetise_contracts/build"
-ENV["CONTRACT_ADDRESS"] = "0x1ea0c8b5206579a0f15d6bc53d3e9ee53267a81b"
+ENV["CONTRACT_ADDRESS"] = "0xbaec2520784311e7925837ed24ec0a3080ba91d1"
 ENV["CONTRACT_NAME"] = "Cygnetise"
 require_relative '../ethereum'
 ETH = Ethereum::Eth.new
@@ -89,14 +89,12 @@ end
 
 
 # data = "de4fff3c6895f6f6e6342e327a9c09aa41fc9acd176a73f931b0b25f04e2b72261e99714f624547eaac24a3235cd7a8f051991c156cc03420eb4810544d1ffda00".scan(/../).map { |x| x.hex.chr }.join
-data = 'ff'
+data = "123"
 puts "size: #{data.size}"
 setVar3 = User.setVar3 data: data
 puts "response from set var 3 #{setVar3}"
 
-# getVar3 = User.getVar3
-# puts 'response should be ff'
-# puts "response got: #{getVar3}"
 
-
-
+getVar3 = User.getVar3
+puts 'response should be ff'
+puts "response got: #{getVar3}"

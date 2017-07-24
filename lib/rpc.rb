@@ -1,3 +1,5 @@
+require 'pp'
+
 module Ethereum::Connection::RPC
   def init_id
     @id = 0
@@ -26,7 +28,14 @@ module Ethereum::Connection::RPC
 
   def check_for_errors(resp, method_name:, args: [])
     # TODO: improve
-    raise "ParseError: #{resp.inspect} - Method name: '#{method_name}' - Params: '#{args}'" if resp["error"]
+    if resp["error"]
+      puts "ERROR:"
+      puts "-"*50
+      pp Oj.load resp
+      puts "-"*50
+
+      raise "ParseError: Method name: '#{method_name}' - Params: '#{args}'"
+    end
     resp
   end
 
