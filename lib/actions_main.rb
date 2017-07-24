@@ -135,7 +135,7 @@ module ActionsMain
     contract_address = contract[:address]
 
     method_name = method
-    method = contract[:methods].find{ |m| m["name"] == method_name.to_s }
+    method = contract[:methods].find{ |m| m[:name] == method_name.to_s }
     raise "Cannot call contract method '#{method_name}' (contract: #{contract[:class_name]})" unless method
     method = sym_keys method
     sig = method[:methodId]
