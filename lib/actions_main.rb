@@ -148,7 +148,7 @@ module ActionsMain
 
     puts "set data: #{data}" if ETH_LOG # 2
 
-    gas = ENV["ETH_GAS"] || "0x4fefd8"
+    gas = ENV["ETH_GAS"] || "0x2FAF080"
     # gas = "0x4fefd8" # 32488100 - limit 32488160 - gaslimit in chain.json is 1C9C380 (30000000) - 1EFBA00
 
     puts "set #{contract[:class_name]}.#{method_name}(#{params_raw})" if ETH_LOG

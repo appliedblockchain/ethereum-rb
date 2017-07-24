@@ -1,6 +1,6 @@
 path_out = File.expand_path "../../../", __FILE__
 ENV["CONFIG_DIR"] = "#{path_out}/cygnetise_contracts/build"
-ENV["CONTRACT_ADDRESS"] = "0xbaec2520784311e7925837ed24ec0a3080ba91d1"
+ENV["CONTRACT_ADDRESS"] = "0x1ea0c8b5206579a0f15d6bc53d3e9ee53267a81b"
 ENV["CONTRACT_NAME"] = "Cygnetise"
 require_relative '../ethereum'
 ETH = Ethereum::Eth.new
