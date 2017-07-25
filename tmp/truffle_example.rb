@@ -5,11 +5,6 @@ ENV["CONTRACT_NAME"] = "Cygnetise"
 require_relative '../ethereum'
 ETH = Ethereum::Eth.new
 ETH.init
-# ETH....
-
-# ETH.get contract: :cygnetise, method: :getter_aka_call, params: [id]
-#
-# ETH.set contract: :cygnetise, method: :setter_aka_sendtransaction, params: attrs.values
 
 
 class Helper
@@ -72,3 +67,117 @@ class User
   end
 end
 
+
+class Org
+  # TODO: write automated tests in rspec
+  def self.count()
+    ETH.get contract: :cygnetise, method: :orgsCount, params: []
+  end
+
+  def self.get(id:)
+    ETH.get contract: :cygnetise, method: :getOrg, params: [id]
+  end
+
+  def self.get_full(id:)
+    # TODO: add multi return support
+    ETH.get contract: :cygnetise, method: :getOrgFull, params: [id]
+  end
+
+  def self.create(value:, user_id:, hash:, sig:, address:)
+    hash = Helper.clean hash
+    sig = Helper.clean sig
+    hash = Helper.to_bin hash
+    sig = Helper.to_bin sig
+    ETH.set contract: :cygnetise, method: :createOrg, params: [value, user_id, hash, sig, address]
+  end
+
+  def self.update(id:, value:, hash:, sig:, address:)
+    hash = Helper.clean hash
+    sig = Helper.clean sig
+    hash = Helper.to_bin hash
+    sig = Helper.to_bin sig
+    ETH.set contract: :cygnetise, method: :updateOrg, params: [id, value, hash, sig, address]
+  end
+end
+
+
+class Org
+  # TODO: write automated tests in rspec
+  def self.count()
+    ETH.get contract: :cygnetise, method: :orgsCount, params: []
+  end
+
+  def self.get(id:)
+    ETH.get contract: :cygnetise, method: :getOrg, params: [id]
+  end
+
+  def self.get_full(id:)
+    # TODO: add multi return support
+    ETH.get contract: :cygnetise, method: :getOrgFull, params: [id]
+  end
+
+  def self.create(value:, user_id:, hash:, sig:, address:)
+    hash = Helper.clean hash
+    sig = Helper.clean sig
+    hash = Helper.to_bin hash
+    sig = Helper.to_bin sig
+    ETH.set contract: :cygnetise, method: :createOrg, params: [value, user_id, hash, sig, address]
+  end
+
+  def self.update(id:, value:, hash:, sig:, address:)
+    hash = Helper.clean hash
+    sig = Helper.clean sig
+    hash = Helper.to_bin hash
+    sig = Helper.to_bin sig
+    ETH.set contract: :cygnetise, method: :updateOrg, params: [id, value, hash, sig, address]
+  end
+end
+
+
+class OrgUser
+  # TODO: write automated tests in rspec
+  def self.count()
+    ETH.get contract: :cygnetise, method: :orgUsersCount, params: []
+  end
+
+  def self.get(id:)
+    ETH.get contract: :cygnetise, method: :getOrgUserFull, params: [id]
+  end
+
+  def self.create(value:, org_id:, hash:, sig:, address:, user_address:)
+    hash = Helper.clean hash
+    sig = Helper.clean sig
+    hash = Helper.to_bin hash
+    sig = Helper.to_bin sig
+    ETH.set contract: :cygnetise, method: :createOrg, params: [org_id, value, user_address, hash, sig, address]
+  end
+
+  def self.update()
+    # Not yet implemented in smart contract
+  end
+end
+
+
+class Entry
+  # TODO: write automated tests in rspec
+  def self.count()
+    ETH.get contract: :cygnetise, method: :entriesCount, params: []
+  end
+
+  def self.get(id:)
+    ETH.get contract: :cygnetise, method: :getEntry, params: [id]
+  end
+
+  def self.get_full(id:)
+    # TODO: add multi return support
+    ETH.get contract: :cygnetise, method: :getEntryFull, params: [id]
+  end
+
+  def self.create()
+    # Not yet implemented in smart contract
+  end
+
+  def self.update()
+    # Not yet implemented in smart contract
+  end
+end
