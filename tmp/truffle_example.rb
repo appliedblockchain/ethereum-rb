@@ -149,7 +149,7 @@ class OrgUser
     sig = Helper.clean sig
     hash = Helper.to_bin hash
     sig = Helper.to_bin sig
-    ETH.set contract: :cygnetise, method: :createOrg, params: [org_id, value, user_address, hash, sig, address]
+    ETH.set contract: :cygnetise, method: :createOrgUser, params: [org_id, value, user_address, hash, sig, address]
   end
 
   def self.update()
