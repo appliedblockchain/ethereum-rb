@@ -52,7 +52,7 @@ module ActionsMain
       # render_outputs
       resp_hash = {}
       method[:outputs].each_with_index do |out, idx|
-        resp_hash[out[:name]] = resp[idx]
+        resp_hash[out["name"]] = resp[idx]
       end
       resp_hash
     end
