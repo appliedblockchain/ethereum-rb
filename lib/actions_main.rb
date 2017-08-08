@@ -23,20 +23,20 @@ module ActionsMain
 
     # processing data - data transformation
     #
-    puts "GET - transforming inputs" if DEBUG
+    puts "GET - transforming inputs" if ETH_LOG
     params = transform_params params, inputs: method[:inputs]
     data = "#{sig}#{params}"
-    puts "data: #{data}" if DEBUG
+    puts "data: #{data}" if ETH_LOG
     # raise contract.inspect
     outputs = method[:outputs]
 
     puts "get #{contract[:class_name]}.#{method_name}(#{params})"  if ETH_LOG
     # this is the main call
     resp = read [{from: from, to: contract_address, data: data}]
-    puts "Resp (raw): #{resp}" if DEBUG
+    puts "Resp (raw): #{resp}" if ETH_LOG
 
     # resp = parse_types resp, outputs: outputs
-    # puts "Resp (types): #{resp}" if DEBUG
+    # puts "Resp (types): #{resp}" if ETH_LOG
 
     # resp = FRM.from_payload(resp)
     # resp = [resp] unless resp.is_a? Array
@@ -56,7 +56,7 @@ module ActionsMain
       end
       resp_hash
     end
-    puts "Resp: #{resp.inspect}" if DEBUG
+    puts "Resp: #{resp.inspect}" if ETH_LOG
     return if CONF_NILS && !resp.nil? && resp.is_a?(String) && resp.empty?
 
     resp
@@ -155,6 +155,11 @@ module ActionsMain
     resp = write [{from: from, to: contract_address, data: data, gas: gas}]
 
     resp
+  end
+
+  def block_get
+    res = block
+    "#{res}".hex
   end
 
 end

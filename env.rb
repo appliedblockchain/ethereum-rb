@@ -18,6 +18,8 @@ ETH_PATH = path
 ETH_LOG = false
 # ETH_LOG = true # enable logs for debugging purposes (development)
 
+DEBUG_CONN = false
+# DEBUG_CONN = true
 
 IPC_PATH = "#{ENV["HOME"]}/.parity/jsonrpc.ipc"
 
@@ -66,7 +68,6 @@ require_relative 'lib/formatting'
 require_relative 'lib/rpc_calls'
 require_relative 'lib/tx_handlers'
 require_relative 'lib/actions_main'
-require_relative 'lib/actions_extra'
 require_relative 'lib/response_parsing'
 require_relative 'lib/method_lookup' # find the implemented RPC methods here
 
@@ -84,7 +85,6 @@ module Ethereum
     include Formatting
     include RpcCalls
     include ActionsMain
-    include ActionsExtra
     include Utils
   end
 end

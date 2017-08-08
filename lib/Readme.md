@@ -4,7 +4,6 @@ Blockchain App framework - version2 #ruby-lang
 
 Files contained in `bapp2/lib`:
 
-    actions_extra.rb # <- all the extra actions (get block height, estimate transaction cost, etc..)
     actions_main.rb # <- this file contains the main actions of bapp2, the main interfaice to your ruby classes - the get-data and transact/execute methods - see #ActionsMain section
     connection.rb # <- connection includes the two RPC connection implementations, HTTP and IPC
     crypto.rb # <- sha3 TODO
