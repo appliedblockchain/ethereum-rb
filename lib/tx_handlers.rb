@@ -1,6 +1,7 @@
 module TxHandlers
 
-  BLOCK_TIMEOUT_SHORT = 0.3
+  BLOCK_TIMEOUT_TIME_DEFAULT = 0.3
+  BLOCK_MEDIAN_TIME_DEFAULT  = 0.01
 
   private
 
@@ -10,12 +11,13 @@ module TxHandlers
   #
   def wait_block(last_block)
     time = Time.now
-    block_median_time = block_median_time_env
+    block_median_time  = block_median_time_env
+    block_timeout_time = block_timeout_time_env
     loop do
       return true  if last_block != block_get
       return false if Time.now - time > BLOCK_TIMEOUT_SHORT
       # sleep 0.005   # TODO: probably around 5ms is the lowest
-      sleep block_median_time || 0.01 # 10ms - good amount for speed (LAN) deployments - 50-100ms - good amount for a international network
+      sleep block_median_time # 10ms - good amount for speed (LAN) deployments - 50-100ms - good amount for a international network
     end
   end
 
@@ -23,7 +25,12 @@ module TxHandlers
 
   def block_median_time_env
     time = ENV["ETH_BLOCK_MEDIAN_TIME"]
-    time.to_i if time
+    time ? time.to_i : BLOCK_MEDIAN_TIME_DEFAULT
+  end
+
+  def block_timeout_time_env
+    time = ENV["ETH_BLOCK_TIMEOUT_TIME"]
+    time ? time.to_i : BLOCK_TIMEOUT_TIME_DEFAULT
   end
 
 end
