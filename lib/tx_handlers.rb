@@ -15,7 +15,7 @@ module TxHandlers
     block_timeout_time = block_timeout_time_env
     loop do
       return true  if last_block != block_get
-      return false if Time.now - time > BLOCK_TIMEOUT_SHORT
+      return false if Time.now - time > block_timeout_time
       # sleep 0.005   # TODO: probably around 5ms is the lowest
       sleep block_median_time # 10ms - good amount for speed (LAN) deployments - 50-100ms - good amount for a international network
     end
