@@ -7,7 +7,7 @@ module Ethereum
     include Utils
 
     def load_interface
-      interface = "#{CONFIG_DIR}/contracts/Cygnetise.json"
+      interface = "#{CONFIG_DIR}/contracts/contract_interface.json"
       interface = File.read interface
       interface = JSON.parse interface
       parse_interface interface
@@ -77,7 +77,7 @@ module Ethereum
       end
 
       {
-        cygnetise: interface
+        contract_class.downcase.to_sym => interface
       }
     end
   end
