@@ -1,6 +1,5 @@
 
 module ActionsMain
-
   # Get function (not an http method, not a GET request, it just reads data from ethereum - reads via RPC from contract data storage)
   #
   #
@@ -14,29 +13,30 @@ module ActionsMain
     # setting up
     #
     method_name = method
-    method = contract[:methods].find{ |m| m["name"] == method_name.to_s }
+
+
+    method = contract[:methods].find{ |m| m[:name] == method_name.to_s }
     raise "Cannot call contract method '#{method_name}' (contract: #{contract[:class_name]})" unless method
     method = sym_keys method
     sig = method[:methodId]
-    # raise sig.inspect
     raise "Cannot find sha3 signature for method '#{method}'" unless sig
 
     # processing data - data transformation
     #
-    puts "GET - transforming inputs" if DEBUG
+    puts "GET - transforming inputs" if ETH_LOG
     params = transform_params params, inputs: method[:inputs]
     data = "#{sig}#{params}"
-    puts "data: #{data}" if DEBUG
+    puts "data: #{data}" if ETH_LOG
     # raise contract.inspect
     outputs = method[:outputs]
 
     puts "get #{contract[:class_name]}.#{method_name}(#{params})"  if ETH_LOG
     # this is the main call
     resp = read [{from: from, to: contract_address, data: data}]
-    puts "Resp (raw): #{resp}" if DEBUG
+    puts "Resp (raw): #{resp}" if ETH_LOG
 
     # resp = parse_types resp, outputs: outputs
-    # puts "Resp (types): #{resp}" if DEBUG
+    # puts "Resp (types): #{resp}" if ETH_LOG
 
     # resp = FRM.from_payload(resp)
     # resp = [resp] unless resp.is_a? Array
@@ -56,8 +56,8 @@ module ActionsMain
       end
       resp_hash
     end
-    puts "Resp: #{resp.inspect}" if DEBUG
-    return if CONF_NILS && !resp.nil? && resp.empty?
+    puts "Resp: #{resp.inspect}" if ETH_LOG
+    return if CONF_NILS && !resp.nil? && resp.is_a?(String) && resp.empty?
 
     resp
   end
@@ -135,11 +135,10 @@ module ActionsMain
     contract_address = contract[:address]
 
     method_name = method
-    method = contract[:methods].find{ |m| m["name"] == method_name.to_s }
+    method = contract[:methods].find{ |m| m[:name] == method_name.to_s }
     raise "Cannot call contract method '#{method_name}' (contract: #{contract[:class_name]})" unless method
     method = sym_keys method
     sig = method[:methodId]
-    # raise sig.inspect
     raise "Cannot find sha3 signature for method '#{method}'" unless sig
 
     params_raw = params
@@ -149,13 +148,18 @@ module ActionsMain
 
     puts "set data: #{data}" if ETH_LOG # 2
 
-    gas = ENV["ETH_GAS"] || "0x3fefd8"
+    gas = ENV["ETH_GAS"] || "0x2FAF080"
     # gas = "0x4fefd8" # 32488100 - limit 32488160 - gaslimit in chain.json is 1C9C380 (30000000) - 1EFBA00
 
     puts "set #{contract[:class_name]}.#{method_name}(#{params_raw})" if ETH_LOG
     resp = write [{from: from, to: contract_address, data: data, gas: gas}]
 
     resp
+  end
+
+  def block_get
+    res = block
+    "#{res}".hex
   end
 
 end

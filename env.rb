@@ -18,6 +18,8 @@ ETH_PATH = path
 ETH_LOG = false
 # ETH_LOG = true # enable logs for debugging purposes (development)
 
+DEBUG_CONN = false
+# DEBUG_CONN = true
 
 IPC_PATH = "#{ENV["HOME"]}/.parity/jsonrpc.ipc"
 
@@ -29,6 +31,8 @@ CONF_NILS = true # returns nil instead of blank string if the value is not set
 
 CONFIG_DIR = if defined? ETH_CONFIG_DIR
   ETH_CONFIG_DIR
+elsif ENV["CONFIG_DIR"] && !ENV["CONFIG_DIR"].empty?
+  ENV["CONFIG_DIR"]
 else
   raise "Error - config dir was not set - please set 'ETH_CONFIG_DIR' in production" if ENV["RACK_ENV"] == "production"
   "#{path}/config"
@@ -36,6 +40,7 @@ end
 
 # initialize vendored Ethereum::ABI
 #
+require_relative "lib/vendor/keccak"
 require_relative "vendor/ethereum-abi/constant"
 require_relative "vendor/ethereum-abi/utils"
 require_relative "vendor/ethereum-abi/exceptions"
@@ -63,7 +68,6 @@ require_relative 'lib/formatting'
 require_relative 'lib/rpc_calls'
 require_relative 'lib/tx_handlers'
 require_relative 'lib/actions_main'
-require_relative 'lib/actions_extra'
 require_relative 'lib/response_parsing'
 require_relative 'lib/method_lookup' # find the implemented RPC methods here
 
@@ -81,7 +85,6 @@ module Ethereum
     include Formatting
     include RpcCalls
     include ActionsMain
-    include ActionsExtra
     include Utils
   end
 end
