@@ -3,14 +3,14 @@ module Ethereum::Connection; end
 require_relative 'rpc'
 
 module Ethereum::Connection
-
+  
   class IPC
     include RPC
-
+    
     def initialize
       init_id
     end
-
+    
     def start(&block)
       check_ipc_file!
       @socket = UNIXSocket.new IPC_PATH
@@ -20,7 +20,7 @@ module Ethereum::Connection
       end
       @socket
     end
-
+    
     def call(payload)
       # puts "Payload: #{payload}"
       @socket.puts payload
@@ -30,57 +30,36 @@ module Ethereum::Connection
       # msg += @socket.recv 10000000
       msg
     end
-
+    
     def close
       @socket.close
     end
-
+    
     private
-
+    
     def check_ipc_file!
       raise "IPC file not found at path '#{IPC_PATH}' - Make sure parity/geth is running? ('cd parity; ./run')" unless  File.exists? IPC_PATH
     end
   end
-
-  class HTTP # simplifies the Net::HTTP api a bit
+  
+  class HTTP
     include RPC
-
+    
     def initialize
       init_id
       url = "http://#{RPC_HOST}:#{RPC_PORT}"
       @uri = URI url
-      header = {'Content-Type' => 'application/json'}
-      @req = Net::HTTP::Post.new @uri, header
-      @block = false
-    end
-
-    def start(&block)
-      if block_given?
-        @block = true
-        Net::HTTP.start(@uri.host, @uri.port) do |http|
-          @http = http
-          block.call self
-        end
-      end
+      @default_headers = {'Content-Type' => 'application/json'}
     end
 
     def call(payload)
-      # puts "payload: #{payload}"
-      @req.body = payload
-      resp = if @block
-        @http.request @req
+      puts "payload: #{payload}" if ETH_LOG
+      resp = ::Typhoeus.post(@uri, body: payload, headers: @default_headers)
+      if resp.success?
+        resp.response_body
       else
-        Net::HTTP.start(@uri.host, @uri.port) do |http|
-          http.request @req
-        end
-      end
-      case resp
-      when Net::HTTPSuccess
-        resp.body
-      else
-        puts "Got HTTP Error when contacting ethereum [via HTTP RPC]"
-        puts resp.body
-        resp.error!
+        puts "error response: #{resp.response_body}" if ETH_LOG
+        Oj.dump({ error: resp.return_message })
       end
     end
 

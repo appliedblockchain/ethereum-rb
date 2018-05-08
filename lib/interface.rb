@@ -6,8 +6,8 @@ module Ethereum
 
     include Utils
 
-    def load_interface
-      interface = "#{CONFIG_DIR}/contracts/contract_interface.json"
+    def load_interface(interface_name = "contract_interface.json")
+      interface = "#{CONFIG_DIR}/contracts/#{interface_name}"
       interface = File.read interface
       interface = JSON.parse interface
       parse_interface interface

@@ -28,10 +28,10 @@ module Ethereum::Connection::RPC
 
   def check_for_errors(resp, method_name:, args: [])
     # TODO: improve
-    if resp["error"]
+    if (parsed_resp = Oj.load(resp)).include? :error
       puts "ERROR:"
       puts "-"*50
-      pp Oj.load resp
+      pp parsed_resp
       puts "-"*50
 
       raise "ParseError: Method name: '#{method_name}' - Params: '#{args}'"

@@ -14,6 +14,7 @@ else
 end
 
 gem "rlp"
+gem "typhoeus"
 
 group :development do
   gem "rspec-core"
