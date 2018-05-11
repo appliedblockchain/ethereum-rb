@@ -26,17 +26,17 @@ module Ethereum::Connection::RPC
 
   include ResponseParsing
 
-  def check_for_errors(resp, method_name:, args: [])
-    # TODO: improve
-    if (parsed_resp = Oj.load(resp)).include? :error
+  def check_for_errors(json_response, method_name:, args: [])
+    response = Oj.load(json_response)
+    if response.include? :error
       puts "ERROR:"
       puts "-"*50
-      pp parsed_resp
+      pp response
       puts "-"*50
 
       raise "ParseError: Method name: '#{method_name}' - Params: '#{args}'"
     end
-    resp
+    json_response
   end
 
   include MethodLookup
