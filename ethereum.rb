@@ -5,8 +5,8 @@ module Ethereum
 
     attr_reader :interface
 
-    def initialize
-      @interface = load_interface
+    def initialize(contracts_interface_name = "")
+      @interface = load_interface contracts_interface_name
 
       @conn = if ENV["IPC"] == "1"
         Connection::IPC.new
@@ -15,7 +15,7 @@ module Ethereum
       end
     end
 
-    def start(&block)
+    def start_connection(&block)
       if block_given?
         @conn.start do
           init
@@ -27,7 +27,7 @@ module Ethereum
       end
     end
 
-    alias :start! :start
+    alias :start! :start_connection
 
     def init
       @coinbase = coinbase

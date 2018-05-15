@@ -28,8 +28,9 @@ Add to Gemfile
 
 ### Usage
 
-    ETH = Ethereum::Eth.new
-    ETH.start!
+    // Specify the file name for your contract interface
+    ETH = Ethereum::Eth.new "Cygnetise.json"
+    ETH.init
     
     ETH.coinbase #=> "0x1234567..."
 
