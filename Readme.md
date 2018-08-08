@@ -1,12 +1,12 @@
 ### Ethereum-Ruby
 
-RPC Client
+#### Ruby Ethereum RPC Client 
 
-PROJECT STATUS: active but low maintainance
+**PROJECT STATUS:** active but low maintainance
 
-FORK STATUS: green
+**FORK STATUS:** green
 
-FORKS present: 0
+**FORKS present:** 0
 
 We will probably support (test/develop) on your fork if you intend one and maintaini it.
 
