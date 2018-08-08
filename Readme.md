@@ -2,6 +2,25 @@
 
 RPC Client
 
+PROJECT STATUS: active but low maintainance
+
+FORK STATUS: green
+
+FORKS present: 0
+
+We will probably support (test/develop) on your fork if you intend one and maintaini it.
+
+### Missing from this fork
+
+- documentation
+-- general
+-- threading model / locking / handling parallel connection
+-- add ws via eventmachine and em http
+
+(ruby toolkit in general for ethereum should be revaluated)
+
+
+
 ### Setup
 
 
