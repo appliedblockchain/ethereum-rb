@@ -4,7 +4,7 @@
 
 **PROJECT STATUS:** active but low maintainance
 
-**FORK STATUS:** green
+**FORK STATUS:** green - usable for prod
 
 **FORKS present:** 0
 
@@ -96,6 +96,11 @@ Calls a contract (setter) - pays the gas fee to change the local contract storag
     
 equivalent of `sendTransaction()` in web3
 
+
+---
+
+TODO: bump to v1
+TODO: release the ruby gem to rubygems
 
 ---
 
