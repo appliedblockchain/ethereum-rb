@@ -70,7 +70,7 @@ equivalent of getBlock() in web3
 
 ---
 
-And then, the two most important methods:
+## Higher level api:
 
 
 #### ETH.read(args=[])
