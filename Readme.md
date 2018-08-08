@@ -24,25 +24,9 @@ We will probably support (test/develop) on your fork if you intend one and maint
 ### Setup
 
 
-**Option 1: Reference it from the Gemfile**
+**Reference it from the Gemfile**
 
-    gem "ethereum", git: "https://GITHUB_TOKEN@github.com/appliedblockchain/ethereum.git"
-    
-when this will be open source (bytes bug fixed + maybe some basic tests + add more methods probably...), we can simply do:
-    
     gem "ethereum", git: "https://github.com/appliedblockchain/ethereum.git"
-
-
-**Option 2: Download it manually on a local directory** and use `path:`
-
-Download:
-
-    git clone git@github.com:appliedblockchain/ethereum
-    git clone https://GITHUB_TOKEN@github.com/appliedblockchain/ethereum.git
-
-Add to Gemfile
-
-    gem "ethereum", path: File.expand_path("~/local_dir/ethereum")
 
 
 ### Usage
@@ -113,18 +97,7 @@ Calls a contract (setter) - pays the gas fee to change the local contract storag
 equivalent of `sendTransaction()` in web3
 
 
-----
+---
 
-
-RPC Calls List: https://github.com/appliedblockchain/ethereum/blob/master/lib/rpc_calls.rb#L1
-
---- 
-
-notes
-
-Implemented methods (current status):
-
-https://github.com/appliedblockchain/ethereum/blob/master/lib/method_lookup.rb#L7
-
-
-LOC < 800
+Enjoy,
+The Applied Blockchain Team
