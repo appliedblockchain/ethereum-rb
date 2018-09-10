@@ -32,7 +32,7 @@ We will probably support (test/develop) on your fork if you intend one and maint
 ### Usage
 
     // Specify the file name for your contract interface
-    ETH = Ethereum::Eth.new "Cygnetise.json"
+    ETH = Ethereum::Eth.new "contract_interface.json"
     ETH.init
     
     ETH.coinbase #=> "0x1234567..."
