@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-ruby spec/basic_spec.rb
